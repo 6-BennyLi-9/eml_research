@@ -88,6 +88,7 @@ namespace eml {
 		return eml{e, nullptr};
 	}
 
+	const auto ONE = ln(E);
 	const auto ZERO = eml{nullptr,eml{eml{nullptr,nullptr},nullptr}};
 
 	/**
@@ -168,6 +169,10 @@ namespace eml {
 	/// @param a a != - i
 	inline eml divide(const eml &a, const eml &b) {
 		return minus(unsafe_divide(plus(a, I), b), unsafe_divide(I, b));
+	}
+
+	inline eml power(const eml &a, const eml &b) {
+		return root(a, divide(ONE, b));
 	}
 }
 #endif //EML_RESEARCH_EML_H
