@@ -76,13 +76,8 @@ namespace eml {
 		}
 	};
 
-#define eml_constance(name, value...) inline eml name() {return value;}
-
-	// const auto X = eml(true);
-	// const auto E = eml();
-
-	eml_constance(X, eml(true))
-	eml_constance(E, eml())
+	const auto X = eml(true);
+	const auto E = eml();
 
 	inline eml ln(const eml &e) {
 		// return eml(nullptr, eml(eml(nullptr, e), nullptr));
@@ -93,7 +88,7 @@ namespace eml {
 		return eml{e, nullptr};
 	}
 
-	eml_constance(ZERO,eml{nullptr,eml{eml{nullptr,nullptr},nullptr}})
+	const auto ZERO = eml{nullptr,eml{eml{nullptr,nullptr},nullptr}};
 
 	/**
 	 * @param a a != 0
@@ -103,6 +98,6 @@ namespace eml {
 		return eml{ln(a), exp(b)};
 	}
 
-	eml_constance(NEGATIVE_ONE, unsafe_minus(eml{ln(E()), E()}, E()))
+	const eml NEGATIVE_ONE = unsafe_minus(eml{ln(E), E}, E);
 }
 #endif //EML_RESEARCH_EML_H
