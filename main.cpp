@@ -21,7 +21,7 @@ static acc_integer emllib(const eml::eml &a) {
 	return cantor::cantor(left, right);
 }
 
-// x + 2
+// ln x
 const eml::eml example1 = eml::ln(eml::X);
 
 static eml::eml emldecode(acc_integer n) {
