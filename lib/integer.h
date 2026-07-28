@@ -138,6 +138,13 @@ inline acc_integer operator%(acc_integer a, const acc_integer &b) {
 	return a %= b;
 }
 
+inline acc_integer &operator++(acc_integer &a) {
+	return a = a + integer_1;
+}
+inline acc_integer &operator--(acc_integer &a) {
+	return a = a - integer_1;
+}
+
 inline acc_integer pow(const acc_integer &n, const acc_integer &k) {
 	if (k.empty())return integer_1;
 	if (k == integer_2)return n * n;
