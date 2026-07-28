@@ -24,5 +24,5 @@ which means the range of f is a subset of the domain of definition(D) of f.
 # Describe all the elementary functions using a number
 I chose the cantor paring function to describe the tree.
 
-#Lincense
+# Lincense
 MIT
