@@ -36,7 +36,7 @@ const auto integer_2 = acc_integer(2);
 
 inline bool operator!=(const acc_integer &a, const acc_integer &b) {
 	if (a.size() != b.size())return true;
-	for (int i = a.size() - 1; i >= 0; --i)
+	for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i)
 		if (a[i] != b[i])return true;
 	return false;
 }
@@ -47,7 +47,7 @@ inline bool operator==(const acc_integer &a, const acc_integer &b) {
 
 inline bool operator<(const acc_integer &a, const acc_integer &b) {
 	if (a.size() != b.size())return a.size() < b.size();
-	for (int i = a.size() - 1; i >= 0; --i)
+	for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i)
 		if (a[i] != b[i])return a[i] < b[i];
 	return false;
 }
@@ -77,8 +77,7 @@ inline acc_integer operator+(acc_integer a, const acc_integer &b) {
 inline acc_integer &operator-=(acc_integer &a, acc_integer b) {
 	if (a < b)swap(a, b);
 	for (int i = 0; i != b.size(); a[i] -= b[i], ++i)
-		if (a[i] < b[i])
-		{
+		if (a[i] < b[i]) {
 			int j = i + 1;
 			while (!a[j])++j;
 			while (j > i) {
@@ -108,7 +107,7 @@ inline acc_integer &operator*=(acc_integer &a, const acc_integer &b) {
 
 inline acc_integer divideF(acc_integer &a, const acc_integer &b) {
 	acc_integer ans;
-	for (int t = a.size() - b.size(); a >= b; --t) {
+	for (int t = static_cast<int>(a.size() - b.size()); a >= b; --t) {
 		acc_integer d;
 		d.assign(t + 1, 0);
 		d.back() = 1;
@@ -138,11 +137,15 @@ inline acc_integer operator%(acc_integer a, const acc_integer &b) {
 	return a %= b;
 }
 
-inline acc_integer &operator++(acc_integer &a) {
-	return a = a + integer_1;
-}
-inline acc_integer &operator--(acc_integer &a) {
-	return a = a - integer_1;
+inline acc_integer sqrt(const acc_integer &n) {
+	acc_integer res = integer_1;
+	while (res * res <= n) {
+		res += integer_1;
+	}
+	if (res > integer_1) {
+		res -= integer_1;
+	}
+	return res;
 }
 
 inline acc_integer pow(const acc_integer &n, const acc_integer &k) {
@@ -152,10 +155,15 @@ inline acc_integer pow(const acc_integer &n, const acc_integer &k) {
 	return pow(pow(n, k / integer_2), integer_2);
 }
 
-inline void print_acc(acc_integer a) {
-	for (int i = a.size() - 1; i >= 0; --i) {
+inline void print_acc(const acc_integer &a) {
+	for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i) {
 		printf("%d", a[i]);
 	}
+}
+
+inline void println_acc(const acc_integer &a) {
+	print_acc(a);
+	printf("\n");
 }
 
 #define EML_RESEARCH_INTEGER_H
