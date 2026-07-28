@@ -22,7 +22,23 @@ static acc_integer emllib(const eml::eml &a) {
 }
 
 // x + 2
-const eml::eml example1 = eml::plus(eml::X, eml::TWO);
+const eml::eml example1 = eml::ln(eml::X);
+
+static eml::eml emldecode(acc_integer n) {
+	eml::eml res;
+	if (cantor::decode_a(n) == acc::integer_1) {
+		res.leftValue = nullptr;
+	} else {
+		res.leftValue = std::make_shared<eml::eml>(emldecode(cantor::decode_a(n)));
+	}
+	if (cantor::decode_b(n) == acc::integer_1) {
+		res.rightValue = nullptr;
+	} else {
+		res.rightValue = std::make_shared<eml::eml>(emldecode(cantor::decode_b(n)));
+	}
+
+	return res;
+}
 
 int main() {
 	example1.println();
@@ -30,5 +46,8 @@ int main() {
 
 	acc::println_acc(emllib(example1));
 
+	eml::eml example2 = emldecode(acc_integer(4));
+	example2.println();
+	example2.println0();
 	return 0;
 }
