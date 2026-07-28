@@ -5,7 +5,7 @@
 #endif
 using acc::acc_integer;
 
-namespace cantor {
+namespace cantor {//cantor pairing
 	inline acc_integer cantor(const acc_integer &a, const acc_integer &b) {
 		return (a+b) * (a + b + acc::integer_1) / acc::integer_2 + b;
 	}
@@ -17,6 +17,8 @@ namespace cantor {
 	inline acc_integer decode_t(const acc_integer &n) {
 		return decode_w(n) * (decode_w(n) + acc::integer_1) / acc::integer_2;
 	}
+
+	//the two below : decoder
 
 	inline acc_integer decode_b(const acc_integer &n) {
 		return n - decode_t(n);
