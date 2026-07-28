@@ -48,10 +48,41 @@ namespace eml {
 				printf(")");
 			}
 		}
+
+		void println() const {
+			print();
+			printf("\n");
+		}
+
+		void print0() const {
+			printf("eml(");
+			if (leftValue) {
+				leftValue->print0();
+			} else {
+				printf("1");
+			}
+			printf(", ");
+			if (rightValue) {
+				rightValue->print0();
+			} else {
+				printf("1");
+			}
+			printf(")");
+		}
+
+		void println0() const {
+			print0();
+			printf("\n");
+		}
 	};
 
-	const auto X = eml(true);
-	const auto E = eml();
+#define eml_constance(name, value...) inline eml name() {return value;}
+
+	// const auto X = eml(true);
+	// const auto E = eml();
+
+	eml_constance(X, eml(true))
+	eml_constance(E, eml())
 
 	inline eml ln(const eml &e) {
 		// return eml(nullptr, eml(eml(nullptr, e), nullptr));
@@ -61,5 +92,17 @@ namespace eml {
 	inline eml exp(const eml &e) {
 		return eml{e, nullptr};
 	}
+
+	eml_constance(ZERO,eml{nullptr,eml{eml{nullptr,nullptr},nullptr}})
+
+	/**
+	 * @param a a != 0
+	 * @param b
+	 */
+	inline eml unsafe_minus(const eml &a, const eml &b) {
+		return eml{ln(a), exp(b)};
+	}
+
+	eml_constance(NEGATIVE_ONE, unsafe_minus(eml{ln(E()), E()}, E()))
 }
 #endif //EML_RESEARCH_EML_H
