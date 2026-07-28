@@ -1,93 +1,155 @@
 #pragma once
 #ifndef EML_RESEARCH_INTEGER_H
 #include <cstdio>
-#include <cstring>
+#include <vector>
 /**
- * 高精度算法。目前 acc_integer 存储的数仅为自然数。
+ * 高精度算法。存储的数仅为自然数。
  */
-class acc_integer {
-	const short max_length = 2e5 + 5;
-	char *head = new char[max_length], *end = head + 1;
+class acc_integer : public std::vector<int> {
 public:
 	acc_integer() : acc_integer(0) {
 	}
 
-	explicit acc_integer(int x) {
-		write(x);
+	explicit acc_integer(const int n) {
+		push_back(n);
+		check();
 	}
 
-	short len() const {
-		return end - head;
-	}
-
-	void print() const {
-		for (short i = len() - 1; i >= 0; --i) {
-			printf("%c", head[i] + '0');
+	acc_integer &check() {
+		while (!empty() && !back())pop_back();
+		if (empty())return *this;
+		for (int i = 1; i < size(); ++i) {
+			(*this)[i] += (*this)[i - 1] / 10;
+			(*this)[i - 1] %= 10;
 		}
-	}
-
-	void write(int x) {
-		memset(head, 0, sizeof(head)); //wtf clang???
-		if (x) {
-			int n = 0;
-			while (x) {
-				head[n] = x % 10;
-				x /= 10;
-				++ n;
-			}
-			end = head + n;
-		} else {
-			head[0] = 0;
-			end = head + 1;
+		while (back() >= 10) {
+			push_back(back() / 10);
+			(*this)[size() - 2] %= 10;
 		}
+		return *this;
 	}
-private:
-	acc_integer friend operator+(const acc_integer &, const acc_integer &);
-	acc_integer friend operator-(const acc_integer &, const acc_integer &);
-	acc_integer friend operator*(const acc_integer &, const acc_integer &);
-	acc_integer friend operator/(const acc_integer &, const int &);
 };
 
 const auto integer_0 = acc_integer(0);
 const auto integer_1 = acc_integer(1);
+const auto integer_2 = acc_integer(2);
 
-inline acc_integer operator+(const acc_integer &a, const acc_integer &b) {
-	if (b.len() > a.len()) {
-		return b + a;
-	}
-	acc_integer result;
-	int n = 0;
-
-	for (int i = 0; i < a.len(); ++i) {
-		result.head[i] += a.head[i] + b.head[i];
-		result.head[i + 1] += result.head[i] / 10;
-		result.head[i] %= 10;
-		++ n;
-	}
-	for (int i = a.len(); i < b.len(); ++i) {
-		result.head[i] += b.head[i];
-		result.head[i + 1] += result.head[i] / 10;
-		result.head[i] %= 10;
-		++ n;
-	}
-	if (result.head[n]) {
-		++n;
-	}
-
-	result.end = result.head + n;
-	return result;
+inline bool operator!=(const acc_integer &a, const acc_integer &b) {
+	if (a.size() != b.size())return true;
+	for (int i = a.size() - 1; i >= 0; --i)
+		if (a[i] != b[i])return true;
+	return false;
 }
 
-inline acc_integer operator-(const acc_integer &a, const acc_integer &b) {
-	throw "未实现";
+inline bool operator==(const acc_integer &a, const acc_integer &b) {
+	return !(a != b);
+}
+
+inline bool operator<(const acc_integer &a, const acc_integer &b) {
+	if (a.size() != b.size())return a.size() < b.size();
+	for (int i = a.size() - 1; i >= 0; --i)
+		if (a[i] != b[i])return a[i] < b[i];
+	return false;
+}
+
+inline bool operator>(const acc_integer &a, const acc_integer &b) {
+	return b < a;
+}
+
+inline bool operator<=(const acc_integer &a, const acc_integer &b) {
+	return !(a > b);
+}
+
+inline bool operator>=(const acc_integer &a, const acc_integer &b) {
+	return !(a < b);
+}
+
+inline acc_integer &operator+=(acc_integer &a, const acc_integer &b) {
+	if (a.size() < b.size())a.resize(b.size());
+	for (int i = 0; i != b.size(); ++i)a[i] += b[i];
+	return a.check();
+}
+
+inline acc_integer operator+(acc_integer a, const acc_integer &b) {
+	return a += b;
+}
+
+inline acc_integer &operator-=(acc_integer &a, acc_integer b) {
+	if (a < b)swap(a, b);
+	for (int i = 0; i != b.size(); a[i] -= b[i], ++i)
+		if (a[i] < b[i])
+		{
+			int j = i + 1;
+			while (!a[j])++j;
+			while (j > i) {
+				--a[j];
+				a[--j] += 10;
+			}
+		}
+	return a.check();
+}
+
+inline acc_integer operator-(acc_integer a, const acc_integer &b) {
+	return a -= b;
 }
 
 inline acc_integer operator*(const acc_integer &a, const acc_integer &b) {
+	acc_integer n;
+	n.assign(a.size() + b.size() - 1, 0);
+	for (int i = 0; i != a.size(); ++i)
+		for (int j = 0; j != b.size(); ++j)
+			n[i + j] += a[i] * b[j];
+	return n.check();
 }
 
-inline acc_integer operator/(const acc_integer &a, const acc_integer &b) {
+inline acc_integer &operator*=(acc_integer &a, const acc_integer &b) {
+	return a = a * b;
 }
 
+inline acc_integer divideF(acc_integer &a, const acc_integer &b) {
+	acc_integer ans;
+	for (int t = a.size() - b.size(); a >= b; --t) {
+		acc_integer d;
+		d.assign(t + 1, 0);
+		d.back() = 1;
+		acc_integer c = b * d;
+		while (a >= c) {
+			a -= c;
+			ans += d;
+		}
+	}
+	return ans;
+}
+
+inline acc_integer operator/(acc_integer a, const acc_integer &b) {
+	return divideF(a, b);
+}
+
+inline acc_integer &operator/=(acc_integer &a, const acc_integer &b) {
+	return a = a / b;
+}
+
+inline acc_integer &operator%=(acc_integer &a, const acc_integer &b) {
+	divideF(a, b);
+	return a;
+}
+
+inline acc_integer operator%(acc_integer a, const acc_integer &b) {
+	return a %= b;
+}
+
+inline acc_integer pow(const acc_integer &n, const acc_integer &k) {
+	if (k.empty())return integer_1;
+	if (k == integer_2)return n * n;
+	if (k.front() % 2)return n * pow(n, k - integer_1);
+	return pow(pow(n, k / integer_2), integer_2);
+}
+
+inline void print_acc(acc_integer a) {
+	for (int i = a.size() - 1; i >= 0; --i) {
+		printf("%d", a[i]);
+	}
+}
 
 #define EML_RESEARCH_INTEGER_H
 
