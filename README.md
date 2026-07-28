@@ -1,5 +1,5 @@
 # eml_research
-You have to learn this((arxiv 2603.21852)[https://arxiv.org/abs/2603.21852] first.
+You have to learn this([arxiv 2603.21852](https://arxiv.org/abs/2603.21852)) first.
 
 # The "emllib"
 After reading the paper, I realized that the elementary functions can be solved in
