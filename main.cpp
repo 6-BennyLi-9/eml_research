@@ -1,13 +1,9 @@
-#include "lib/integer.h"
+#include "lib/cantor.h"
 
 int main() {
-	acc_integer a(8), b(114);
-	println_acc(integer_2);
-	println_acc(a);
-	println_acc(b);
-	println_acc(a+b);
-	println_acc(a * b);
-	println_acc(b - a);
-	println_acc(sqrt(acc_integer(3)));
+	auto res = cantor::cantor(acc_integer(65465116), acc_integer(23185));
+	acc::println_acc(res);
+	acc::println_acc(cantor::decode_a(res));
+	acc::println_acc(cantor::decode_b(res));
 	return 0;
 }
