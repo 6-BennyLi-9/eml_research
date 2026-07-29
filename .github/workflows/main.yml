@@ -36,4 +36,4 @@ jobs:
         echo "F1"
         git commit -m "Auto Update"
         echo "F1"
-        git push raw
+        git push origin raw
