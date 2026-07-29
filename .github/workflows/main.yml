@@ -13,6 +13,13 @@ jobs:
       uses: actions/checkout@v7
     - name: update
       run: |
+        git config --global user.name "Github Actions"
+        git config --global user.email "actions@github.com"
+
         git checkout -b raw
         git merge main
-        git push origin raw
+
+        rm -rf .idea
+
+        git commit --allow-empty -m Auto Update
+        git push
