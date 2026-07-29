@@ -27,6 +27,8 @@ jobs:
         rm -rf .idea
         git add .
         git commit -m "Auto Update"
+        git config pull.rebase false  # merge
+        git config pull.rebase true   # rebase
+        git config pull.ff only       # fast-forward only
         git pull --ff-only origin raw
-        git merge --ff-only origin/raw || true
         git push origin raw
