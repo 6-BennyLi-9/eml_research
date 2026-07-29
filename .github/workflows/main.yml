@@ -29,4 +29,6 @@ jobs:
 
         git add .
         git commit --allow-empty -m "Auto Update"
+        git pull origin raw
+        git merge origin/raw || true
         git push origin raw
