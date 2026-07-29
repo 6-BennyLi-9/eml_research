@@ -70,12 +70,10 @@ int main() {
 
 	acc::println(emllib(example2));
 
-	eml::eml de = emldecode(acc_integer(42));
-	de.println();
-	de.println0();
-
-	de = emldecode(acc_integer(114514));
-	de.println();
-	de.println0();
+	for (const int x: {42, 114514, 1919810, 123456789}) {
+		eml::eml de = emldecode(acc_integer(x));
+		de.println();
+		de.println0();
+	}
 	return 0;
 }
