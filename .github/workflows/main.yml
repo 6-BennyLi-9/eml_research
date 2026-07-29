@@ -23,8 +23,9 @@ jobs:
 
         git fetch origin
         git checkout raw
-        git pull --force origin main --edit "Merge Remote"
-        git merge --strategy=ours main --edit "Merge Origin"
+        git status
+        git pull --force origin main --no-commit
+        git merge --strategy=ours main --no-commit
         rm -rf .idea
         git add .
         git commit -m "Auto Update"
