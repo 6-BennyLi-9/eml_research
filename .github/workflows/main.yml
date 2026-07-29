@@ -21,6 +21,7 @@ jobs:
         git config --global user.name "Github Actions"
         git config --global user.email "actions@github.com"
 
+        git fetch origin
         git checkout -b raw
         git merge main || true
 
