@@ -23,12 +23,9 @@ jobs:
 
         git fetch origin
         git checkout -b raw
-        git merge --ff-only main || true
+        git pull --force
+        git merge --hard main || true
         rm -rf .idea
         git add .
         git commit -m "Auto Update"
-        git config pull.rebase false  # merge
-        git config pull.rebase true   # rebase
-        git config pull.ff only       # fast-forward only
-        git pull --ff-only origin raw
         git push origin raw
