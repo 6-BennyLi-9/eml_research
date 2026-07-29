@@ -166,8 +166,11 @@ namespace acc {
 			if (mid(left, right) * mid(left, right) < n) {
 				left = mid(left, right);
 			} else {
-				right = mid(right, left);
+				right = mid(left, right);
 			}
+		}
+		if (right * right <= n) {
+			return right;
 		}
 		return left;
 	}
