@@ -21,5 +21,6 @@ jobs:
 
         rm -rf .idea
 
-        git commit --allow-empty -m Auto Update
+        git add .
+        git commit --allow-empty -m "Auto Update"
         git push
