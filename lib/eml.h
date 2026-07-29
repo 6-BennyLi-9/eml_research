@@ -76,16 +76,19 @@ namespace eml {
 		}
 	};
 
+#define emlFunction(name) inline eml name(const eml &x)
+#define emlOperator(name) inline eml name(const eml &a, const eml &b)
+
 	const auto X = eml(true);
 	const auto E = eml();
 
-	inline eml ln(const eml &e) {
+	emlFunction(ln) {
 		// return eml(nullptr, eml(eml(nullptr, e), nullptr));
-		return eml{nullptr, eml{eml{nullptr, e}, nullptr}};
+		return eml{nullptr, eml{eml{nullptr, x}, nullptr}};
 	}
 
-	inline eml exp(const eml &e) {
-		return eml{e, nullptr};
+	emlFunction(exp) {
+		return eml{x, nullptr};
 	}
 
 	const auto ONE = ln(E);
@@ -95,7 +98,7 @@ namespace eml {
 	 * @param a a != 0
 	 * @param b
 	 */
-	inline eml unsafe_minus(const eml &a, const eml &b) {
+	emlOperator(unsafe_minus) {
 		return eml{ln(a), exp(b)};
 	}
 
@@ -110,12 +113,12 @@ namespace eml {
 	 * @param b 被开的根数幂次(b-th root)
 	 * @return the result
 	 */
-	inline eml root(const eml &a, const eml &b) {
+	emlOperator(root) {
 		return exp(exp(unsafe_minus(ln(ln(a)), ln(b))));
 	}
 
-	inline eml sqrt(const eml &e) {
-		return root(e, TWO);
+	emlFunction(sqrt) {
+		return root(x, TWO);
 	}
 
 	///应该是小写，为了方便还是用 I
@@ -126,16 +129,16 @@ namespace eml {
 	 * @param a
 	 * @param b b != i
 	 */
-	inline eml minus(const eml &a, const eml &b) {
+	emlOperator(minus) {
 		return unsafe_minus(unsafe_minus(I, b), unsafe_minus(I, a));
 	}
 
-	inline eml opposite(const eml &a) {
-		return minus(ZERO, a);
+	emlFunction(opposite) {//TODO : organize this
+		return minus(ZERO, x);
 	}
 
 	// a - (- b)
-	inline eml plus(const eml &a, const eml &b) {
+	emlOperator(plus) {
 		return minus(a, opposite(b));
 	}
 
@@ -143,13 +146,13 @@ namespace eml {
 	 * @param a ab != 0
 	 * @param b ab != 0
 	 */
-	inline eml unsafe_times(const eml &a, const eml &b) {
+	emlOperator(unsafe_times) {
 		return exp(plus(ln(a), ln(b)));
 	}
 	/***
 	 * @param a a != 0
 	 */
-	inline eml unsafe_divide(const eml &a, const eml &b) {
+	emlOperator(unsafe_divide) {
 		return exp(minus(ln(a), ln(b)));
 	}
 
@@ -157,8 +160,8 @@ namespace eml {
 	const auto QUARTER = unsafe_divide(exp(minus(ZERO, ln(TWO))), TWO);
 
 	// (i/2) * (a + i/2) + 1 / 4 = ai/2
-	inline eml half_i_t(const eml &a) {
-		return plus(unsafe_times(HALF_I, plus(a, HALF_I)), QUARTER);
+	emlFunction(half_i_t) {
+		return plus(unsafe_times(HALF_I, plus(x, HALF_I)), QUARTER);
 	}
 
 	/***
@@ -166,7 +169,7 @@ namespace eml {
 	 * @param a a != - i / 2
 	 * @param b b != - i / 2
 	 */
-	inline eml times(const eml &a, const eml &b) {
+	emlOperator(times) {
 		return plus(minus(minus(unsafe_times(plus(a, HALF_I), plus(b, HALF_I)), half_i_t(a)), half_i_t(b)),QUARTER);
 	}
 
@@ -174,12 +177,15 @@ namespace eml {
 	 * (a + i) / b - i / b = a / b
 	 * @param a a != - i
 	 */
-	inline eml divide(const eml &a, const eml &b) {
+	emlOperator(divide) {
 		return minus(unsafe_divide(plus(a, I), b), unsafe_divide(I, b));
 	}
 
-	inline eml power(const eml &a, const eml &b) {
+	emlOperator(power) {
 		return exp(exp(plus(ln(ln(a)), ln(b))));
 	}
+
+#undef emlOperator
+#undef emlFunction
 }
 #endif //EML_RESEARCH_EML_H
