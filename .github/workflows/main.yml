@@ -23,4 +23,4 @@ jobs:
 
         git add .
         git commit --allow-empty -m "Auto Update"
-        git push
+        git push origin raw
