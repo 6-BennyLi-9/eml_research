@@ -31,13 +31,13 @@ const eml::eml example2 = eml::exp(eml::TWO);
 static eml::eml emldecode(const acc_integer &n) {
 #ifdef DEBUG
 	printf("at ");
-	acc::println_acc(n);
+	acc::println(n);
 	printf("t = ");
-	acc::print_acc(pairing::t(n));
+	acc::print(pairing::t(n));
 	printf(", a = ");
-	acc::print_acc(pairing::decode_a(n));
+	acc::print(pairing::decode_a(n));
 	printf(", b = ");
-	acc::println_acc(pairing::decode_b(n));
+	acc::println(pairing::decode_b(n));
 #endif
 
 	eml::eml res;
@@ -63,12 +63,12 @@ int main() {
 	example1.println();
 	example1.println0();
 
-	acc::println_acc(emllib(example1));
+	acc::println(emllib(example1));
 
 	example2.println();
 	example2.println0();
 
-	acc::println_acc(emllib(example2));
+	acc::println(emllib(example2));
 
 	eml::eml de = emldecode(acc_integer(42));
 	de.println();

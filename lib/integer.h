@@ -145,14 +145,14 @@ namespace acc {
 		return pow(pow(n, k / integer_2), integer_2);
 	}
 
-	inline void print_acc(const acc_integer &a) {
+	inline void print(const acc_integer &a) {
 		for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i) {
 			printf("%d", a[i]);
 		}
 	}
 
-	inline void println_acc(const acc_integer &a) {
-		print_acc(a);
+	inline void println(const acc_integer &a) {
+		print(a);
 		printf("\n");
 	}
 
