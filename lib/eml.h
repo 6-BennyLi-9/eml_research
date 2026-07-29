@@ -6,13 +6,13 @@
 #include <utility>
 
 namespace eml {
+	static std::map<signed, const char*> algebra;
 	class eml {
 	public:
 		std::shared_ptr<eml> leftValue, rightValue;
 		//0 -- normal expression
 		//1,2,3,... --- algebra
 		signed type;
-		static std::map<signed, char*> algebra;
 
 
 		eml(const std::shared_ptr<eml> &leftValue, const std::shared_ptr<eml> &rightValue):

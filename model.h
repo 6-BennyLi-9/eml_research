@@ -10,14 +10,12 @@ namespace model {
 	typedef void (*model_sample_runner)();
 
 	struct model_sample {
-		const char* name_cn;
-		const char* description_cn;
-		const char* name_en;
-		const char* description_en;
+		const char* name;
+		const char* description;
 		model_sample_runner runner;
 
-		model_sample(const char * name_cn, const char * description_cn, const char * name_en, const char * description_en, model_sample_runner runner):
-			name_cn(name_cn), description_cn(description_cn), name_en(name_en), description_en(description_en),runner(runner)
+		model_sample(const char * name, const char * description, model_sample_runner runner):
+			name(name), description(description), runner(runner)
 		{}
 	};
 	typedef std::vector<model_sample> model;

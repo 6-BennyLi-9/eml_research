@@ -65,7 +65,7 @@ static eml::eml emldecode(const acc_integer &n) {
 
 const model::model core = {
 	{
-		"高精度平方根测试", "debug",
+		// "高精度平方根测试", "debug",
 		"TEST SQRT", "debug",
 		[]()-> void {
 			for (int i = 1; i <= 100; i++) {
@@ -75,7 +75,7 @@ const model::model core = {
 		}
 	},
 	{
-		"EMLLIB 样例", "展示 EMLLIB 是如何工作的",
+		// "EMLLIB 样例", "展示 EMLLIB 是如何工作的",
 		"SAMPLE EMLLIB", "Shows how does EMLLIB work.",
 		[]()-> void {
 			example1.println();
@@ -89,7 +89,7 @@ const model::model core = {
 		}
 	},
 	{
-		"EMLLIB 解码样例", "展示 EMLLIB 是如何被解码的",
+		// "EMLLIB 解码样例", "展示 EMLLIB 是如何被解码的",
 		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
 		[]()-> void {
 			for (const int x: {42, 114514, 1919810, 123456789}) {
@@ -102,5 +102,8 @@ const model::model core = {
 };
 
 int main() {
+	for (int i = 0; i < core.size(); ++i) {
+		printf("%d. [%s]\n    -- %s\n", i, core[i].name, core[i].description);
+	}
 	return 0;
 }
