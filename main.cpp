@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 
+#include "model.h"
 #include "lib/pairing.h"
 #include "lib/eml.h"
 #include "lib/integer.h"
@@ -61,24 +62,45 @@ static eml::eml emldecode(const acc_integer &n) {
 	return res;
 }
 
-int main() {
-	// for (int i = 1; i <= 100; i++) {
-	// 	printf("%d, sqrt = ", i);
-	// 	acc::println_acc(acc::sqrt(acc_integer(i)));
-	// }
-	example1.println();
-	example1.println0();
-	emllib(example1).println();
 
-	example2.println();
-	example2.println0();
-	emllib(example2).println();
-	emllib(example2).printlnE();
+const model::model core = {
+	{
+		"高精度平方根测试", "debug",
+		"TEST SQRT", "debug",
+		[]()-> void {
+			for (int i = 1; i <= 100; i++) {
+				printf("%d, sqrt = ", i);
+				acc::println(acc::sqrt(acc_integer(i)));
+			}
+		}
+	},
+	{
+		"EMLLIB 样例", "展示 EMLLIB 是如何工作的",
+		"SAMPLE EMLLIB", "Shows how does EMLLIB work.",
+		[]()-> void {
+			example1.println();
+			example1.println0();
+			emllib(example1).println();
 
-	for (const int x: {42, 114514, 1919810, 123456789}) {
-		eml::eml de = emldecode(acc_integer(x));
-		de.println();
-		de.println0();
+			example2.println();
+			example2.println0();
+			emllib(example2).println();
+			emllib(example2).printlnE();
+		}
+	},
+	{
+		"EMLLIB 解码样例", "展示 EMLLIB 是如何被解码的",
+		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
+		[]()-> void {
+			for (const int x: {42, 114514, 1919810, 123456789}) {
+				eml::eml de = emldecode(acc_integer(x));
+				de.println();
+				de.println0();
+			}
+		}
 	}
+};
+
+int main() {
 	return 0;
 }

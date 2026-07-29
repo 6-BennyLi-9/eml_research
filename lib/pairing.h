@@ -1,8 +1,10 @@
-#pragma once
 #ifndef EML_RESEARCH_CANTOR_H
+#define EML_RESEARCH_CANTOR_H
+
 #ifndef EML_RESEARCH_INTEGER_H
 #include "integer.h"
 #endif
+
 using acc::acc_integer;
 
 namespace pairing {
@@ -26,7 +28,5 @@ namespace pairing {
 		return (acc_integer(3) * t(n) +  acc_integer(2) * n- t(n)*t(n) - acc_integer(4)) / acc::integer_2;
 	}
 }
-
-#define EML_RESEARCH_CANTOR_H
 
 #endif //EML_RESEARCH_CANTOR_H

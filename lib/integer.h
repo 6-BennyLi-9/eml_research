@@ -1,5 +1,5 @@
-#pragma once
 #ifndef EML_RESEARCH_INTEGER_H
+#define EML_RESEARCH_INTEGER_H
 #include <cstdio>
 #include <vector>
 namespace acc {
@@ -210,8 +210,5 @@ namespace acc {
 	inline void acc_integer::printE() const { acc::printE(*this); }
 	inline void acc_integer::printlnE() const { acc::printlnE(*this); }
 }
-
-
-#define EML_RESEARCH_INTEGER_H
 
 #endif //EML_RESEARCH_INTEGER_H
