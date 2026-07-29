@@ -24,7 +24,7 @@ static acc_integer emllib(const eml::eml &a) {
 // ln x
 const eml::eml example1 = eml::ln(eml::X);
 
-static eml::eml emldecode(acc_integer n) {
+static eml::eml emldecode(const acc_integer &n) {
 	eml::eml res;
 	if (cantor::decode_a(n) == acc::integer_1) {
 		res.leftValue = nullptr;
