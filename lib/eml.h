@@ -99,7 +99,9 @@ namespace eml {
 		return eml{ln(a), exp(b)};
 	}
 
+	//(e - 1) - e
 	const auto NEGATIVE_ONE = unsafe_minus(eml{ln(E), E}, E);
+	//1 - ( -1 )
 	const auto TWO = eml{ZERO, exp(NEGATIVE_ONE)};
 
 	/**
@@ -120,7 +122,7 @@ namespace eml {
 	const auto I = sqrt(NEGATIVE_ONE);
 
 	/**
-	 *
+	 * (i - b) - (i - a) = a - b
 	 * @param a
 	 * @param b b != i
 	 */
@@ -132,6 +134,7 @@ namespace eml {
 		return minus(ZERO, a);
 	}
 
+	// a - (- b)
 	inline eml plus(const eml &a, const eml &b) {
 		return minus(a, opposite(b));
 	}
@@ -144,8 +147,7 @@ namespace eml {
 		return exp(plus(ln(a), ln(b)));
 	}
 	/***
-	 * @param a ab != 0
-	 * @param b ab != 0
+	 * @param a a != 0
 	 */
 	inline eml unsafe_divide(const eml &a, const eml &b) {
 		return exp(minus(ln(a), ln(b)));
@@ -154,11 +156,13 @@ namespace eml {
 	const auto HALF_I = unsafe_divide(I, TWO);
 	const auto QUARTER = unsafe_divide(exp(minus(ZERO, ln(TWO))), TWO);
 
+	// (i/2) * (a + i/2) + 1 / 4 = ai/2
 	inline eml half_i_t(const eml &a) {
 		return plus(unsafe_times(HALF_I, plus(a, HALF_I)), QUARTER);
 	}
 
 	/***
+	 * (a + i/2) * (b + i/2)  - ai/2 - bi/2 + 1 / 4 = ab
 	 * @param a a != - i / 2
 	 * @param b b != - i / 2
 	 */
@@ -166,13 +170,16 @@ namespace eml {
 		return plus(minus(minus(unsafe_times(plus(a, HALF_I), plus(b, HALF_I)), half_i_t(a)), half_i_t(b)),QUARTER);
 	}
 
-	/// @param a a != - i
+	/**
+	 * (a + i) / b - i / b = a / b
+	 * @param a a != - i
+	 */
 	inline eml divide(const eml &a, const eml &b) {
 		return minus(unsafe_divide(plus(a, I), b), unsafe_divide(I, b));
 	}
 
 	inline eml power(const eml &a, const eml &b) {
-		return root(a, divide(ONE, b));
+		return exp(exp(plus(ln(ln(a)), ln(b))));
 	}
 }
 #endif //EML_RESEARCH_EML_H

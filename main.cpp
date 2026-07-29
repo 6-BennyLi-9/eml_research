@@ -73,5 +73,9 @@ int main() {
 	eml::eml de = emldecode(acc_integer(42));
 	de.println();
 	de.println0();
+
+	de = emldecode(acc_integer(114514));
+	de.println();
+	de.println0();
 	return 0;
 }
