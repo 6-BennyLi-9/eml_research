@@ -62,13 +62,12 @@ int main() {
 	// }
 	example1.println();
 	example1.println0();
-
-	acc::println(emllib(example1));
+	emllib(example1).println();
 
 	example2.println();
 	example2.println0();
-
-	acc::println(emllib(example2));
+	emllib(example2).println();
+	emllib(example2).printlnE();
 
 	for (const int x: {42, 114514, 1919810, 123456789}) {
 		eml::eml de = emldecode(acc_integer(x));
