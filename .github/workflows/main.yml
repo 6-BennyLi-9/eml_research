@@ -24,7 +24,7 @@ jobs:
         git fetch origin
         git checkout raw
         git status
-        git pull --force origin main --no-commit
+        git pull --force origin raw --no-commit
         git merge --strategy=ours main --no-commit
         rm -rf .idea
         git add .
