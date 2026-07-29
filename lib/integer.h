@@ -30,10 +30,13 @@ namespace acc {
 			return *this;
 		}
 
-		void print()	const;
-		void println()	const;
-		void printE()	const;
-		void printlnE()	const;
+		void print() const;
+
+		void println() const;
+
+		void printE() const;
+
+		void printlnE() const;
 	};
 
 	const auto integer_0 = acc_integer(0);
@@ -194,7 +197,7 @@ namespace acc {
 			print(a);
 		}
 
-		printf("%d.%d%d%de%llu",a[a.size()-1], a[a.size()-2], a[a.size()-3], a[a.size()-4], a.size() - 1);
+		printf("%d.%d%d%de%llu", a[a.size() - 1], a[a.size() - 2], a[a.size() - 3], a[a.size() - 4], a.size() - 1);
 	}
 
 	inline void printlnE(const acc_integer &a) {
@@ -202,9 +205,9 @@ namespace acc {
 		printf("\n");
 	}
 
-	inline void acc_integer::print()	const { acc::print(*this); }
-	inline void acc_integer::println()	const { acc::println(*this); }
-	inline void acc_integer::printE()	const { acc::printE(*this); }
+	inline void acc_integer::print() const { acc::print(*this); }
+	inline void acc_integer::println() const { acc::println(*this); }
+	inline void acc_integer::printE() const { acc::printE(*this); }
 	inline void acc_integer::printlnE() const { acc::printlnE(*this); }
 }
 

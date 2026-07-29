@@ -1,6 +1,7 @@
 #ifndef EML_RESEARCH_EML_H
 #define EML_RESEARCH_EML_H
 #include <cstdio>
+#include <map>
 #include <memory>
 #include <utility>
 
@@ -8,15 +9,19 @@ namespace eml {
 	class eml {
 	public:
 		std::shared_ptr<eml> leftValue, rightValue;
-		int isX;
+		//0 -- normal expression
+		//1,2,3,... --- algebra
+		signed type;
+		static std::map<signed, char*> algebra;
+
 
 		eml(const std::shared_ptr<eml> &leftValue, const std::shared_ptr<eml> &rightValue):
-			leftValue(leftValue), rightValue(rightValue), isX(false)
+			leftValue(leftValue), rightValue(rightValue), type(0)
 		{}
 		eml() : eml(nullptr, nullptr) {}
 
-		explicit eml(const bool isX) :
-			leftValue(nullptr), rightValue(nullptr), isX(isX)
+		explicit eml(const signed &type) :
+			leftValue(nullptr), rightValue(nullptr), type(type)
 		{}
 
 		eml(const eml &leftValue, const eml &rightValue):
@@ -30,8 +35,8 @@ namespace eml {
 		{}
 
 		void print() const {
-			if (isX) {
-				printf("x");
+			if (type) {
+				printf("%s", algebra[type]);
 				return;
 			}
 			if (leftValue) {
@@ -79,7 +84,7 @@ namespace eml {
 #define emlFunction(name) inline eml name(const eml &x)
 #define emlOperator(name) inline eml name(const eml &a, const eml &b)
 
-	const auto X = eml(true);
+	const auto X = eml(1);
 	const auto E = eml();
 
 	emlFunction(ln) {

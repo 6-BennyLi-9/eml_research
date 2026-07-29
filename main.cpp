@@ -1,5 +1,7 @@
 // #define DEBUG
 
+#include <stdexcept>
+
 #include "lib/pairing.h"
 #include "lib/eml.h"
 #include "lib/integer.h"
@@ -7,6 +9,10 @@
 using acc::acc_integer;
 
 static acc_integer emllib(const eml::eml &a) {
+	if (a.type) {
+		throw std::runtime_error("Type not supported");
+	}
+
 	acc_integer left, right;
 	if (a.leftValue) {
 		left = emllib(*a.leftValue.get());
