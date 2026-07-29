@@ -1,4 +1,4 @@
-#define DEBUG
+// #define DEBUG
 
 #include "lib/pairing.h"
 #include "lib/eml.h"
@@ -25,6 +25,8 @@ static acc_integer emllib(const eml::eml &a) {
 
 // ln x
 const eml::eml example1 = eml::ln(eml::X);
+// exp 2
+const eml::eml example2 = eml::exp(eml::TWO);
 
 static eml::eml emldecode(const acc_integer &n) {
 #ifdef DEBUG
@@ -54,17 +56,22 @@ static eml::eml emldecode(const acc_integer &n) {
 }
 
 int main() {
-	for (int i = 1; i <= 100; i++) {
-		printf("%d, sqrt = ", i);
-		acc::println_acc(acc::sqrt(acc_integer(i)));
-	}
-	// example1.println();
-	// example1.println0();
-	//
-	// acc::println_acc(emllib(example1));
-	//
-	// eml::eml example2 = emldecode(acc_integer(1654));
-	// example2.println();
-	// example2.println0();
+	// for (int i = 1; i <= 100; i++) {
+	// 	printf("%d, sqrt = ", i);
+	// 	acc::println_acc(acc::sqrt(acc_integer(i)));
+	// }
+	example1.println();
+	example1.println0();
+
+	acc::println_acc(emllib(example1));
+
+	example2.println();
+	example2.println0();
+
+	acc::println_acc(emllib(example2));
+
+	eml::eml de = emldecode(acc_integer(42));
+	de.println();
+	de.println0();
 	return 0;
 }
