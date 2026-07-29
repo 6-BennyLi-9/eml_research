@@ -31,12 +31,12 @@ const model::model core = {
 		[]()-> void {
 			example1.println();
 			example1.println0();
-			eml::emllib(example1).println();
+			eml::emllib0(example1).println();
 
 			example2.println();
 			example2.println0();
-			eml::emllib(example2).println();
-			eml::emllib(example2).printlnE();
+			eml::emllib0(example2).println();
+			eml::emllib0(example2).printlnE();
 		}
 	},
 	{

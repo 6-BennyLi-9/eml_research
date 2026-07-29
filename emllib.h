@@ -7,20 +7,20 @@
 #include "lib/integer.h"
 
 namespace eml{
-	inline acc::acc_integer emllib(const eml &a) {
+	inline acc::acc_integer emllib0(const eml &a) {
 		if (a.type) {
 			throw std::runtime_error("Type not supported");
 		}
 
 		acc::acc_integer left, right;
 		if (a.leftValue) {
-			left = emllib(*a.leftValue.get());
+			left = emllib0(*a.leftValue.get());
 		} else {
 			left = acc::integer_1;
 		}
 
 		if (a.rightValue) {
-			right = emllib(*a.rightValue.get());
+			right = emllib0(*a.rightValue.get());
 		} else {
 			right = acc::integer_1;
 		}
