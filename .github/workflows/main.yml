@@ -23,7 +23,7 @@ jobs:
 
         git fetch origin
         git checkout -b raw
-        git pull --force
+        git pull --force origin main
         git merge --hard main || true
         rm -rf .idea
         git add .
