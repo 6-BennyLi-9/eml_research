@@ -24,9 +24,14 @@ jobs:
         git fetch origin
         git checkout raw
         git status
+        echo "F1"
         git pull --force origin raw --no-commit
+        echo "F1"
         git merge --strategy=ours main --no-commit
+        echo "F1"
         rm -rf .idea
         git add .
+        echo "F1"
         git commit -m "Auto Update"
+        echo "F1"
         git push raw
