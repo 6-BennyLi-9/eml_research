@@ -15,6 +15,13 @@ namespace acc {
 			push_back(n);
 			check();
 		}
+		explicit acc_integer(const char* str) {
+			int i = strlen(str) - 1;
+			for (; i >= 0; --i) {
+				push_back(str[i] - '0');
+			}
+			check();
+		}
 
 		acc_integer &check() {
 			while (!empty() && !back())pop_back();

@@ -24,6 +24,11 @@ const model::model core = {
 			const auto times = eml::eml{eml::eml{nullptr, {{eml::ln({nullptr, eml::X}), eml::eml(2)}, nullptr}},nullptr};
 			times.println();
 			eml::emllib(times).println();
+
+			acc::acc_integer("1006223783010386972525519400225122423494749603838855805076470783074657").println();
+
+			eml::emldecodeS(0, acc::acc_integer(1)).println();
+			eml::emllibS(0, eml::E).println();
 		}
 	},
 	{
