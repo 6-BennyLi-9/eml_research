@@ -20,20 +20,10 @@ const model::model core = {
 		// "高精度平方根测试", "debug",
 		"DEBUG", "debug",
 		[] {
-			eml::algebra_definition(1, {"x"});
-			const auto newOpposite = eml::eml{eml::eml{nullptr, eml::eml{nullptr, eml::eml{nullptr, {eml::E, nullptr}}}},eml::eml{eml::X, nullptr}};
-			newOpposite.println();
-			newOpposite.println0();
-			printf("\n");
-			eml::emllib(newOpposite).println();
-			printf("\n");
-
-			const auto oldOpposite = eml::opposite(eml::X);
-			oldOpposite.println();
-			oldOpposite.println0();
-			printf("\n");
-			eml::emllib(oldOpposite).println();
-			printf("\n");
+			eml::algebra_definition(2);
+			const auto times = eml::eml{eml::eml{nullptr, {{eml::ln({nullptr, eml::X}), eml::eml(2)}, nullptr}},nullptr};
+			times.println();
+			eml::emllib(times).println();
 		}
 	},
 	{

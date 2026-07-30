@@ -94,12 +94,16 @@ namespace eml{
 		}
 	}
 
-	inline acc::acc_integer emllibS(const int &count, const eml &x) {
+	inline void algebra_definition(const int &count) {
 		algebra_definition(count, std_naming(count));
+	}
+
+	inline acc::acc_integer emllibS(const int &count, const eml &x) {
+		algebra_definition(count);
 		return emllib(x);
 	}
 	inline eml emldecodeS(const int &count, const acc::acc_integer &x) {
-		algebra_definition(count, std_naming(count));
+		algebra_definition(count);
 		return emldecode(x);
 	}
 
