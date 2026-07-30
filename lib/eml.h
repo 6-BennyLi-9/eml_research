@@ -181,12 +181,15 @@ namespace eml {
 	}
 
 	/***
-	 * @param a ab != 0
-	 * @param b ab != 0
+	 * exp(ln a + ln b)
+	 * @param a ab > 0
+	 * @param b ab > 0
 	 */
 	emlOperator(unsafe_times) {
-		return exp(plus(ln(a), ln(b)));
+		// return exp(plus(ln(a), ln(b)));
+		return emlexplict(2, emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657")), {a,b});
 	}
+
 	/***
 	 * @param a a != 0
 	 */
