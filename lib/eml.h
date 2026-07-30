@@ -9,19 +9,19 @@ namespace eml {
 	static std::map<signed, const char*> algebra;
 	class eml {
 	public:
-		std::shared_ptr<eml> leftValue, rightValue;
+		std::shared_ptr<eml> lValue, rValue;
 		//0 -- normal expression
 		//1,2,3,... --- algebra
 		signed type;
 
 
 		eml(const std::shared_ptr<eml> &leftValue, const std::shared_ptr<eml> &rightValue):
-			leftValue(leftValue), rightValue(rightValue), type(0)
+			lValue(leftValue), rValue(rightValue), type(0)
 		{}
 		eml() : eml(nullptr, nullptr) {}
 
 		explicit eml(const signed &type) :
-			leftValue(nullptr), rightValue(nullptr), type(type)
+			lValue(nullptr), rValue(nullptr), type(type)
 		{}
 
 		eml(const eml &leftValue, const eml &rightValue):
@@ -39,17 +39,17 @@ namespace eml {
 				printf("%s", algebra[type]);
 				return;
 			}
-			if (leftValue) {
+			if (lValue) {
 				printf("e^(");
-				leftValue->print();
+				lValue->print();
 				printf(")");
 			} else {
 				printf("e");
 			}
 
-			if (rightValue) {
+			if (rValue) {
 				printf(" - ln(");
-				rightValue->print();
+				rValue->print();
 				printf(")");
 			}
 		}
@@ -61,14 +61,14 @@ namespace eml {
 
 		void print0() const {
 			printf("eml(");
-			if (leftValue) {
-				leftValue->print0();
+			if (lValue) {
+				lValue->print0();
 			} else {
 				printf("1");
 			}
 			printf(", ");
-			if (rightValue) {
-				rightValue->print0();
+			if (rValue) {
+				rValue->print0();
 			} else {
 				printf("1");
 			}

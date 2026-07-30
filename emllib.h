@@ -10,7 +10,7 @@
 namespace eml{
 	inline bool allow_algebra_expression = false;
 
-	inline acc::acc_integer emllib0(const eml &a) {
+	inline acc::acc_integer emllib(const eml &a) {
 		if (a.type) {
 			if (allow_algebra_expression) {
 				return acc::acc_integer(a.type) + acc::integer_1;
@@ -19,14 +19,14 @@ namespace eml{
 		}
 
 		acc::acc_integer left, right;
-		if (a.leftValue) {
-			left = emllib0(*a.leftValue.get());
+		if (a.lValue) {
+			left = emllib(*a.lValue.get());
 		} else {
 			left = acc::integer_1;
 		}
 
-		if (a.rightValue) {
-			right = emllib0(*a.rightValue.get());
+		if (a.rValue) {
+			right = emllib(*a.rValue.get());
 		} else {
 			right = acc::integer_1;
 		}
@@ -49,20 +49,20 @@ namespace eml{
 		eml res;
 		acc::acc_integer cache = pairing::decode_a(n);
 		if (cache == acc::integer_1) {
-			res.leftValue = nullptr;
+			res.lValue = nullptr;
 		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
-			res.leftValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
+			res.lValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
 		} else {
-			res.leftValue = std::make_shared<eml>(emldecode(cache));
+			res.lValue = std::make_shared<eml>(emldecode(cache));
 		}
 
 		cache = pairing::decode_b(n);
 		if (cache == acc::integer_1) {
-			res.rightValue = nullptr;
+			res.rValue = nullptr;
 		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
-			res.rightValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
+			res.rValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
 		} else {
-			res.rightValue = std::make_shared<eml>(emldecode(cache));
+			res.rValue = std::make_shared<eml>(emldecode(cache));
 		}
 
 		return res;
