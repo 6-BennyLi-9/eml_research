@@ -1,5 +1,6 @@
 // #define DEBUG
 
+#include <cstring>
 #include <stdexcept>
 
 #include "emllib.h"
@@ -52,9 +53,42 @@ const model::model core = {
 	}
 };
 
-int main() {
+int main(const int argc, char* argv[]) {
 	for (int i = 0; i < core.size(); ++i) {
 		printf("%d. [%s]\n    -- %s\n", i, core[i].name, core[i].description);
+	}
+
+	printf("==================\n");
+
+	if (argc - 1) {
+		printf("Pre-input detected, option: %s\n", argv[1]);
+
+		if (!strcmp(argv[1], "-m") || !strcmp(argv[1], "--mode")) {
+			const int mode = std::stoi(argv[2]);
+
+			printf("Mode selected: %d\n", mode);
+
+			if (mode < 0 || mode >= core.size()) {
+				printf("Error: invalid mode selected: %d\n", mode);
+				return -1;
+			}
+
+			core[mode].runner();
+		} else {
+			printf("Error: invalid option code: %s\n", argv[0]);
+		}
+	} else {
+		printf("In manual input period. Please input the code:");
+		char str[10];
+		scanf("%s", str);
+		const int mode = std::stoi(str);
+
+		if (mode < 0 || mode >= core.size()) {
+			printf("Error: invalid mode selected: %d\n", mode);
+			return -1;
+		}
+
+		core[mode].runner();
 	}
 	return 0;
 }
