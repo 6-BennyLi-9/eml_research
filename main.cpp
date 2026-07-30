@@ -8,7 +8,7 @@
 #include "lib/eml.h"
 #include "lib/integer.h"
 
-using acc::acc_integer;
+using acc::integer;
 
 // ln x
 const eml::eml example1 = eml::ln(eml::X);
@@ -25,9 +25,9 @@ const model::model core = {
 			times.println();
 			eml::emllib(times).println();
 
-			acc::acc_integer("1006223783010386972525519400225122423494749603838855805076470783074657").println();
+			acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657").println();
 
-			eml::emldecodeS(0, acc::acc_integer(1)).println();
+			eml::emldecodeS(0, acc::integer(1)).println();
 			eml::emllibS(0, eml::E).println();
 		}
 	},
@@ -54,7 +54,7 @@ const model::model core = {
 		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
 		[]{
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
-				eml::eml de = eml::emldecode(acc_integer(x));
+				eml::eml de = eml::emldecode(integer(x));
 				de.println();
 				de.println0();
 			}
@@ -66,7 +66,7 @@ const model::model core = {
 			eml::algebra_definition(2,{"x", "y"});
 
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
-				eml::eml de = eml::emldecode(acc_integer(x));
+				eml::eml de = eml::emldecode(integer(x));
 				de.println();
 				de.println0();
 			}
@@ -75,7 +75,7 @@ const model::model core = {
 	{
 		"SAMPLE EMLLIB EXPLICT", "Shows how does EMLLIB EXPLICT replace the algebra with other algebra.",
 		[] {
-			auto decode = eml::emldecodeS(2, acc::acc_integer(9527));
+			auto decode = eml::emldecodeS(2, acc::integer(9527));
 			decode.println();
 
 			decode = eml::emlexplict(2, decode, {eml::E, eml::ZERO});

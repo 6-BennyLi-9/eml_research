@@ -88,18 +88,18 @@ namespace eml {
 		}
 	};
 
-	inline acc::acc_integer emllib(const eml &);
-	inline eml emldecode(const acc::acc_integer &);
-	inline acc::acc_integer emllibS(const int &, const eml &);
-	inline eml emldecodeS(const int &, const acc::acc_integer &);
+	inline acc::integer emllib(const eml &);
+	inline eml emldecode(const acc::integer &);
+	inline acc::integer emllibS(const int &, const eml &);
+	inline eml emldecodeS(const int &, const acc::integer &);
 
 	inline eml emlexplict(const int &, const eml &, const std::vector<eml> &);
 
-	inline eml emlexplict(const int & p1, const acc::acc_integer & acc, const std::vector<eml> & p3) {
+	inline eml emlexplict(const int & p1, const acc::integer & acc, const std::vector<eml> & p3) {
 		return emlexplict(p1, emldecode(acc), p3);
 	}
 	inline eml emlexplict(const int & p1, const int & acc, const std::vector<eml> & p3) {
-		return emlexplict(p1, emldecode(acc::acc_integer(acc)), p3);
+		return emlexplict(p1, emldecode(acc::integer(acc)), p3);
 	}
 
 #define emlFunction(name) inline eml name(const eml &x)
@@ -119,7 +119,7 @@ namespace eml {
 
 	const auto ONE = ln(E);
 	// const auto ZERO = eml{nullptr,eml{eml{nullptr,nullptr},nullptr}};
-	const auto ZERO = emldecodeS(0, acc::acc_integer(7));
+	const auto ZERO = emldecodeS(0, acc::integer(7));
 	/// WARNING: USE IT CAREFULLY
 	const auto NEGATIVE_INF = ln(ZERO);
 
