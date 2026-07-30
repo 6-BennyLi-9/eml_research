@@ -114,8 +114,13 @@ namespace eml {
 	/// WARNING: USE IT CAREFULLY
 	const auto NEGATIVE_INF = ln(ZERO);
 
+	//使用负无穷消去第一项
 	emlFunction(opposite) {
 		return {NEGATIVE_INF, exp(x)};
+	}
+
+	emlFunction(inv) {
+		return {{NEGATIVE_INF, x}, nullptr};
 	}
 
 	/**
