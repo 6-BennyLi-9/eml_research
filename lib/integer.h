@@ -37,11 +37,14 @@ namespace acc {
 		void printE() const;
 
 		void printlnE() const;
+
+		[[nodiscard]] signed toSigned() const ;
 	};
 
 	const auto integer_0 = acc_integer(0);
 	const auto integer_1 = acc_integer(1);
 	const auto integer_2 = acc_integer(2);
+	const auto integer_10 = acc_integer(10);
 
 	inline bool operator!=(const acc_integer &a, const acc_integer &b) {
 		if (a.size() != b.size())return true;
@@ -90,9 +93,8 @@ namespace acc {
 			a.print();
 			printf(", b:");
 			b.println();
-#else
-			swap(a, b);
 #endif
+			swap(a, b);
 		}
 		for (int i = 0; i != b.size(); a[i] -= b[i], ++i)
 			if (a[i] < b[i]) {
@@ -209,6 +211,14 @@ namespace acc {
 	inline void acc_integer::println() const { acc::println(*this); }
 	inline void acc_integer::printE() const { acc::printE(*this); }
 	inline void acc_integer::printlnE() const { acc::printlnE(*this); }
+
+	inline signed acc_integer::toSigned() const {
+		if (*this == integer_0) {
+			return 0;
+		}
+
+		return (*this)[0] + (*this / integer_10).toSigned() * 10;
+	}
 }
 
 #endif //EML_RESEARCH_INTEGER_H

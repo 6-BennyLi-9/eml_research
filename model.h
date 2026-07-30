@@ -7,14 +7,14 @@
 #include <vector>
 
 namespace model {
-	typedef void (*model_sample_runner)();
+	typedef void (*runnable)();
 
 	struct model_sample {
 		const char* name;
 		const char* description;
-		model_sample_runner runner;
+		runnable runner;
 
-		model_sample(const char * name, const char * description, model_sample_runner runner):
+		model_sample(const char * name, const char * description, runnable runner):
 			name(name), description(description), runner(runner)
 		{}
 	};

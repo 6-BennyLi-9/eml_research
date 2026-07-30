@@ -19,7 +19,7 @@ const model::model core = {
 	{
 		// "高精度平方根测试", "debug",
 		"TEST SQRT", "debug",
-		[]()-> void {
+		[] {
 			for (int i = 1; i <= 100; i++) {
 				printf("%d, sqrt = ", i);
 				acc::println(acc::sqrt(acc_integer(i)));
@@ -29,11 +29,13 @@ const model::model core = {
 	{
 		// "EMLLIB 样例", "展示 EMLLIB 是如何工作的",
 		"SAMPLE EMLLIB", "Shows how does EMLLIB work.",
-		[]()-> void {
+		[]{
+			eml::algebra_definition(1, {"x"});
 			example1.println();
 			example1.println0();
 			eml::emllib0(example1).println();
 
+			eml::algebra_definition(0, {});
 			example2.println();
 			example2.println0();
 			eml::emllib0(example2).println();
@@ -43,8 +45,20 @@ const model::model core = {
 	{
 		// "EMLLIB 解码样例", "展示 EMLLIB 是如何被解码的",
 		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
-		[]()-> void {
-			for (const int x: {42, 114514, 1919810, 123456789}) {
+		[]{
+			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
+				eml::eml de = eml::emldecode(acc_integer(x));
+				de.println();
+				de.println0();
+			}
+		}
+	},
+	{
+		"SAMPLE ALGEBRA DECODER", "Shows how does EMLLIB DECODER work with algebra.",
+		[] {
+			eml::algebra_definition(2,{"x", "y"});
+
+			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
 				eml::eml de = eml::emldecode(acc_integer(x));
 				de.println();
 				de.println0();
