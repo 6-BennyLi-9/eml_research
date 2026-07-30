@@ -48,22 +48,20 @@ namespace eml{
 
 		eml res;
 		acc::acc_integer cache = pairing::decode_a(n);
-		if (cache == acc::integer_1) {
-			res.lValue = nullptr;
-		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
-			res.lValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
-		} else {
-			res.lValue = std::make_shared<eml>(emldecode(cache));
-		}
+		if (cache == acc::integer_1) {}
+			else if (cache <= pairing::algebra_domain + acc::integer_1) {
+				res.lValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
+			} else {
+				res.lValue = std::make_shared<eml>(emldecode(cache));
+			}
 
 		cache = pairing::decode_b(n);
-		if (cache == acc::integer_1) {
-			res.rValue = nullptr;
-		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
-			res.rValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
-		} else {
-			res.rValue = std::make_shared<eml>(emldecode(cache));
-		}
+		if (cache == acc::integer_1) {}
+			else if (cache <= pairing::algebra_domain + acc::integer_1) {
+				res.rValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
+			} else {
+				res.rValue = std::make_shared<eml>(emldecode(cache));
+			}
 
 		return res;
 	}
@@ -103,6 +101,24 @@ namespace eml{
 	inline eml emldecodeS(const int &count, const acc::acc_integer &x) {
 		algebra_definition(count, std_naming(count));
 		return emldecode(x);
+	}
+
+	inline eml emlexplict(const int &count, const eml &disc, const std::vector<eml> &par) {
+		assert(count == par.size());
+		if (disc.type) {
+			return par[disc.type - 1];
+		}
+		eml res;
+
+		if (disc.lValue) {
+			res.lValue = std::make_shared<eml>(emlexplict(count, *(disc.lValue), par));
+		}
+
+		if (disc.rValue) {
+			res.rValue = std::make_shared<eml>(emlexplict(count, *(disc.rValue), par));
+		}
+
+		return res;
 	}
 }
 

@@ -93,6 +93,15 @@ namespace eml {
 	inline acc::acc_integer emllibS(const int &, const eml &);
 	inline eml emldecodeS(const int &, const acc::acc_integer &);
 
+	inline eml emlexplict(const int &, const eml &, const std::vector<eml> &);
+
+	inline eml emlexplict(const int & p1, const acc::acc_integer & acc, const std::vector<eml> & p3) {
+		return emlexplict(p1, emldecode(acc), p3);
+	}
+	inline eml emlexplict(const int & p1, const int & acc, const std::vector<eml> & p3) {
+		return emlexplict(p1, emldecode(acc::acc_integer(acc)), p3);
+	}
+
 #define emlFunction(name) inline eml name(const eml &x)
 #define emlOperator(name) inline eml name(const eml &a, const eml &b)
 
@@ -186,7 +195,7 @@ namespace eml {
 	}
 
 	const auto HALF_I = unsafe_divide(I, TWO);
-	const auto QUARTER = unsafe_divide(exp(minus(ZERO, ln(TWO))), TWO);
+	const auto QUARTER = unsafe_divide(exp(opposite(ln(TWO))), TWO);
 
 	// (i/2) * (a + i/2) + 1 / 4 = ai/2
 	emlFunction(half_i_t) {

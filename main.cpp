@@ -76,6 +76,16 @@ const model::model core = {
 				de.println0();
 			}
 		}
+	},
+	{
+		"SAMPLE EMLLIB EXPLICT", "Shows how does EMLLIB EXPLICT replace the algebra with other algebra.",
+		[] {
+			auto decode = eml::emldecodeS(2, acc::acc_integer(9527));
+			decode.println();
+
+			decode = eml::emlexplict(2, decode, {eml::E, eml::ZERO});
+			decode.println();
+		}
 	}
 };
 
