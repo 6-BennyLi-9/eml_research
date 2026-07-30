@@ -50,6 +50,8 @@ const model::model core = {
 			example2.println0();
 			eml::emllib(example2).println();
 			eml::emllib(example2).printlnE();
+
+			eml::emllib(eml::ZERO).println();
 		}
 	},
 	{

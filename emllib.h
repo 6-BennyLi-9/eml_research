@@ -68,6 +68,22 @@ namespace eml{
 		return res;
 	}
 
+	inline std::vector<const char *> std_naming(const int &count) {
+		assert(count >= 0);
+		assert(count <= 26);
+
+		std::vector<const char *> names;
+		for (int i = 0; i < count && i < 3; i++) {
+			names.push_back(new char[]{static_cast<char>(i + 'x'), '\0'}); // NOLINT(*-narrowing-conversions)
+		}
+
+		for (int i = 3; i < count; i++) {
+			names.push_back(new char[]{static_cast<char>(i + 'a'), '\0'}); // NOLINT(*-narrowing-conversions)
+		}
+
+		return names;
+	}
+
 	inline void algebra_definition(const int &count, const std::vector<const char *> &names) {
 		assert(count == names.size());
 
@@ -78,6 +94,15 @@ namespace eml{
 		for (int i = 0; i < count; i++) {
 			algebra[i + 1] = names[i];
 		}
+	}
+
+	inline acc::acc_integer emllibS(const int &count, const eml &x) {
+		algebra_definition(count, std_naming(count));
+		return emllib(x);
+	}
+	inline eml emldecodeS(const int &count, const acc::acc_integer &x) {
+		algebra_definition(count, std_naming(count));
+		return emldecode(x);
 	}
 }
 

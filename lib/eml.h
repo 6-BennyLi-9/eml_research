@@ -5,6 +5,8 @@
 #include <memory>
 #include <utility>
 
+#include "integer.h"
+
 namespace eml {
 	static std::map<signed, const char*> algebra;
 	class eml {
@@ -86,6 +88,11 @@ namespace eml {
 		}
 	};
 
+	inline acc::acc_integer emllib(const eml &);
+	inline eml emldecode(const acc::acc_integer &);
+	inline acc::acc_integer emllibS(const int &, const eml &);
+	inline eml emldecodeS(const int &, const acc::acc_integer &);
+
 #define emlFunction(name) inline eml name(const eml &x)
 #define emlOperator(name) inline eml name(const eml &a, const eml &b)
 
@@ -102,7 +109,8 @@ namespace eml {
 	}
 
 	const auto ONE = ln(E);
-	const auto ZERO = eml{nullptr,eml{eml{nullptr,nullptr},nullptr}};
+	// const auto ZERO = eml{nullptr,eml{eml{nullptr,nullptr},nullptr}};
+	const auto ZERO = emldecodeS(0, acc::acc_integer(7));
 
 	/**
 	 * @param a a != 0
