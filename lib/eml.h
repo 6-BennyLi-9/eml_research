@@ -111,6 +111,12 @@ namespace eml {
 	const auto ONE = ln(E);
 	// const auto ZERO = eml{nullptr,eml{eml{nullptr,nullptr},nullptr}};
 	const auto ZERO = emldecodeS(0, acc::acc_integer(7));
+	/// WARNING: USE IT CAREFULLY
+	const auto NEGATIVE_INF = ln(ZERO);
+
+	emlFunction(opposite) {
+		return {NEGATIVE_INF, exp(x)};
+	}
 
 	/**
 	 * @param a a != 0
@@ -151,9 +157,9 @@ namespace eml {
 		return unsafe_minus(unsafe_minus(I, b), unsafe_minus(I, a));
 	}
 
-	emlFunction(opposite) {//TODO : organize this
-		return minus(ZERO, x);
-	}
+	// emlFunction(opposite) {//T O D O : organize this
+	// 	return minus(ZERO, x);
+	// }
 
 	// a - (- b)
 	emlOperator(plus) {
