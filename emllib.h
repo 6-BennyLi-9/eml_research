@@ -1,6 +1,6 @@
 #ifndef EML_RESEARCH_EMLLIB_H
 #define EML_RESEARCH_EMLLIB_H
-#include <assert.h>
+#include <cassert>
 #include <stdexcept>
 
 #include "lib/eml.h"
@@ -74,6 +74,7 @@ namespace eml{
 		allow_algebra_expression = true;
 		pairing::algebra_domain = acc::acc_integer(count);
 
+		algebra.clear();
 		for (int i = 0; i < count; i++) {
 			algebra[i + 1] = names[i];
 		}

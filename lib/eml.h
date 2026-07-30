@@ -60,6 +60,11 @@ namespace eml {
 		}
 
 		void print0() const {
+			if (type) {
+				printf("%s", algebra[type]);
+				return;
+			}
+
 			printf("eml(");
 			if (lValue) {
 				lValue->print0();
