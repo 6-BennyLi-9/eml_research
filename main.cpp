@@ -18,12 +18,22 @@ const eml::eml example2 = eml::exp(eml::TWO);
 const model::model core = {
 	{
 		// "高精度平方根测试", "debug",
-		"TEST SQRT", "debug",
+		"DEBUG", "debug",
 		[] {
-			for (int i = 1; i <= 100; i++) {
-				printf("%d, sqrt = ", i);
-				acc::println(acc::sqrt(acc_integer(i)));
-			}
+			eml::algebra_definition(1, {"x"});
+			const auto newOpposite = eml::eml{eml::eml{nullptr, eml::eml{nullptr, eml::eml{nullptr, {eml::E, nullptr}}}},eml::eml{eml::X, nullptr}};
+			newOpposite.println();
+			newOpposite.println0();
+			printf("\n");
+			eml::emllib(newOpposite).println();
+			printf("\n");
+
+			const auto oldOpposite = eml::opposite(eml::X);
+			oldOpposite.println();
+			oldOpposite.println0();
+			printf("\n");
+			eml::emllib(oldOpposite).println();
+			printf("\n");
 		}
 	},
 	{
