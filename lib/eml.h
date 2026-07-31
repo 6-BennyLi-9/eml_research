@@ -155,8 +155,12 @@ namespace eml {
 		return root(x, TWO);
 	}
 
+	emlFunction(half) {
+		return exp(minus(ln(x), ln(TWO)));
+	}
+
 	///应该是小写，为了方便还是用 I
-	const auto I = sqrt(NEGATIVE_ONE);
+	const auto I = exp(half(ln(NEGATIVE_ONE)));
 
 	// a - (- b)
 	emlOperator(plus) {
@@ -181,6 +185,29 @@ namespace eml {
 		return exp(exp(plus(ln(ln(a)), ln(b))));
 	}
 
+	emlFunction(square) {
+		return power(x, TWO);
+	}
+
+	emlOperator(mid) {
+		return half(plus(a, b));
+	}
+
+	/**
+	 *
+	 * @param a 底数
+	 * @param b 真数
+	 * @return log_a(b)
+	 */
+	emlOperator(log) {
+		return divide(ln(b), ln(a));
+	}
+
+	const auto PI = times(opposite(I), ln(NEGATIVE_ONE));
+
+	emlOperator(norm) {
+		return sqrt(plus(square(a), square(b)));
+	}
 #undef emlOperator
 #undef emlFunction
 }
