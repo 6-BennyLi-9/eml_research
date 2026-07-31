@@ -6,6 +6,7 @@
 #include "emllib.h"
 #include "model.h"
 #include "lib/eml.h"
+#include "lib/emlsurvey.h"
 #include "lib/integer.h"
 
 using acc::integer;
@@ -20,17 +21,15 @@ const model::model core = {
 		// "高精度平方根测试", "debug",
 		"DEBUG", "debug",
 		[] {
-			eml::algebra_definition(2);
-			const auto times = eml::eml{eml::eml{nullptr, {{eml::ln({nullptr, eml::X}), eml::eml(2)}, nullptr}},nullptr};
-			times.println();
-			eml::emllib(times).println();
-			auto oldTimes = eml::times(eml::eml(1), eml::eml(2));
-			oldTimes.println();
+			auto op = eml::emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657"));
+			eml::survey(op).println();
+			eml::algebra_definition(0);
+			op = eml::plus(eml::E, eml::TWO);
+			eml::survey(op).println();
+			const auto lib = eml::emllib(op);
 
-			acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657").println();
-
-			eml::emldecodeS(0, acc::integer(1)).println();
-			eml::emllibS(0, eml::E).println();
+			lib.println();
+			lib.printlnE();
 		}
 	},
 	{
@@ -82,6 +81,23 @@ const model::model core = {
 
 			decode = eml::emlexplict(2, decode, {eml::E, eml::ZERO});
 			decode.println();
+		}
+	},
+	{
+		"SAMPLE EMLSURVEY", "Shows how does EMLSURVEY work.",
+		[] {
+			auto op = eml::sin(eml::X);
+			// op.println();
+			eml::survey(op).println();
+			printf("\n");
+
+			op = eml::tan(eml::X);
+			eml::survey(op).println();
+			printf("\n");
+
+			op = eml::divide(eml::sin(eml::X), eml::cos(eml::X));
+			eml::survey(op).println();
+			printf("\n");
 		}
 	}
 };
