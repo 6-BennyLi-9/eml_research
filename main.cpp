@@ -15,13 +15,13 @@ using acc::integer;
 const eml::eml example1 = eml::ln(eml::X);
 // exp 2
 const eml::eml example2 = eml::exp(eml::TWO);
-
 const model::model core = {
 	{
 		// "高精度平方根测试", "debug",
 		"DEBUG", "debug",
 		[] {
-			auto op = eml::emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657"));
+			auto op = eml::emldecodeS(
+				2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657"));
 			eml::survey(op).println();
 			eml::algebra_definition(0);
 			op = eml::plus(eml::E, eml::TWO);
@@ -35,7 +35,7 @@ const model::model core = {
 	{
 		// "EMLLIB 样例", "展示 EMLLIB 是如何工作的",
 		"SAMPLE EMLLIB", "Shows how does EMLLIB work.",
-		[]{
+		[] {
 			eml::algebra_definition(1, {"x"});
 			example1.println();
 			example1.println0();
@@ -53,7 +53,7 @@ const model::model core = {
 	{
 		// "EMLLIB 解码样例", "展示 EMLLIB 是如何被解码的",
 		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
-		[]{
+		[] {
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
 				integer(x).println();
 				eml::eml de = eml::emldecode(integer(x));
@@ -65,7 +65,7 @@ const model::model core = {
 	{
 		"SAMPLE ALGEBRA DECODER", "Shows how does EMLLIB DECODER work with algebra.",
 		[] {
-			eml::algebra_definition(2,{"x", "y"});
+			eml::algebra_definition(2, {"x", "y"});
 
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
 				integer(x).println();
@@ -101,10 +101,28 @@ const model::model core = {
 			eml::survey(op).println();
 			printf("\n");
 		}
+	},
+	{
+		"SAMPLE EMLLIB STRICT", "Shows how does EMLLIB work strictly.",
+		[] {
+			constexpr int N = 5;
+
+			for (int i = 1; i <= N; ++i) {
+				for (int j = 1; j <= N; ++j) {
+					printf("[%d, %d]: ",i,j);
+
+					const auto s = eml::emldecodeS(i - 1, integer(j + (i + 1) * i / 2));
+
+					s.println();
+					// eml::survey(s).println();
+				}
+			}
+		}
 	}
 };
 
-int main(const int argc, char* argv[]) {
+
+int main(const int argc, char *argv[]) {
 	for (int i = 0; i < core.size(); ++i) {
 		printf("%d. [%s]\n    -- %s\n", i, core[i].name.c_str(), core[i].description.c_str());
 	}
@@ -124,7 +142,8 @@ int main(const int argc, char* argv[]) {
 				return -1;
 			}
 
-			printf("\n==========================\n\nFinished successfully in %lld ms.\n", static_cast<long long int>(core[mode].run().count()));
+			printf("\n==========================\n\nFinished successfully in %lld ms.\n",
+					static_cast<long long int>(core[mode].run().count()));
 		} else {
 			printf("Error: invalid option code: %s\n", argv[0]);
 		}
@@ -139,7 +158,8 @@ int main(const int argc, char* argv[]) {
 			return -1;
 		}
 
-		printf("\n\n==========================\n\nFinished successfully in %lld ms.\n", static_cast<long long int>(core[mode].run().count()));
+		printf("\n\n==========================\n\nFinished successfully in %lld ms.\n",
+				static_cast<long long int>(core[mode].run().count()));
 	}
 	return 0;
 }
