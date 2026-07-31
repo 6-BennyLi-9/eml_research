@@ -205,7 +205,7 @@ namespace acc {
 			print(a);
 		}
 
-		printf("%d.%d%d%de%llu", a[a.size() - 1], a[a.size() - 2], a[a.size() - 3], a[a.size() - 4], a.size() - 1);
+		printf("%d.%d%d%de%llu", a[a.size() - 1], a[a.size() - 2], a[a.size() - 3], a[a.size() - 4], static_cast<unsigned long long>(a.size() - 1));
 	}
 
 	inline void printlnE(const integer &a) {
