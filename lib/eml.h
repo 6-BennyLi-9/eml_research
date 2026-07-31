@@ -208,6 +208,10 @@ namespace eml {
 	emlOperator(norm) {
 		return sqrt(plus(square(a), square(b)));
 	}
+
+	emlFunction(sigmoid) {
+		return inv(plus(ONE, exp(opposite(x))));
+	}
 #undef emlOperator
 #undef emlFunction
 }
