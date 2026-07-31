@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 #include "emllib.h"
-#include "model.h"
+#include "util/model.h"
 #include "lib/eml.h"
 #include "lib/emlsurvey.h"
 #include "lib/integer.h"
