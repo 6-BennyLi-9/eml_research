@@ -229,6 +229,10 @@ namespace eml {
 		return times(x, I);
 	}
 
+	emlFunction(arot) {
+		return opposite(rot(x));
+	}
+
 	emlFunction(sin) {
 		return opposite(rot(sinh(rot(x))));
 	}
@@ -239,7 +243,7 @@ namespace eml {
 
 	///不要用 sin/cos， 会严重增加复杂度
 	emlFunction(tan) {
-		return opposite(rot(tanh(rot(x))));
+		return arot(tanh(rot(x)));
 	}
 
 	emlFunction(arsinh) {
@@ -256,6 +260,18 @@ namespace eml {
 
 	emlFunction(artanh) {
 		return half(ln(divide(plus(ONE, x), minus(ONE, x))));
+	}
+
+	emlFunction(arcsin) {
+		return arot(arsinh(rot(x)));
+	}
+
+	emlFunction(arccos) {
+		return arot(arcosh(x));
+	}
+
+	emlFunction(arctan) {
+		return arot(arctan(rot(x)));
 	}
 #undef emlOperator
 #undef emlFunction
