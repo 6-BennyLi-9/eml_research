@@ -132,12 +132,12 @@ namespace eml {
 		return {{NEGATIVE_INF, x}, nullptr};
 	}
 
-	emlOperator(minus0) {
+	emlOperator(minus) {
 		return eml{ln(a), exp(b)};
 	}
 
 	//(e - 1) - e
-	const auto NEGATIVE_ONE = minus0(eml{nullptr, E}, E);
+	const auto NEGATIVE_ONE = minus(eml{nullptr, E}, E);
 	//1 - ( -1 )
 	const auto TWO = eml{ZERO, exp(NEGATIVE_ONE)};
 
@@ -148,7 +148,7 @@ namespace eml {
 	 * @return the result
 	 */
 	emlOperator(root) {
-		return exp(exp(minus0(ln(ln(a)), ln(b))));
+		return exp(exp(minus(ln(ln(a)), ln(b))));
 	}
 
 	emlFunction(sqrt) {
@@ -158,19 +158,6 @@ namespace eml {
 	///应该是小写，为了方便还是用 I
 	const auto I = sqrt(NEGATIVE_ONE);
 
-	/**
-	 * (i - b) - (i - a) = a - b
-	 * @param a
-	 * @param b b != i
-	 */
-	emlOperator(minus) {
-		return minus0(minus0(I, b), minus0(I, a));
-	}
-
-	// emlFunction(opposite) {//T O D O : organize this
-	// 	return minus(ZERO, x);
-	// }
-
 	// a - (- b)
 	emlOperator(plus) {
 		return minus(a, opposite(b));
@@ -178,44 +165,16 @@ namespace eml {
 
 	/***
 	 * exp(ln a + ln b)
-	 * @param a ab > 0
-	 * @param b ab > 0
 	 */
-	emlOperator(times0) {
-		// return exp(plus(ln(a), ln(b)));
+	emlOperator(times) {
 		return emlexplict(2, emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657")), {a,b});
 	}
 
 	/***
-	 * @param a a > 0
-	 */
-	emlOperator(divide0) {
-		return exp(minus(ln(a), ln(b)));
-	}
-
-	const auto HALF_I = divide0(I, TWO);
-	const auto QUARTER = divide0(exp(opposite(ln(TWO))), TWO);
-
-	// (i/2) * (a + i/2) + 1 / 4 = ai/2
-	emlFunction(half_i_t) {
-		return plus(times0(HALF_I, plus(x, HALF_I)), QUARTER);
-	}
-
-	/***
-	 * (a + i/2) * (b + i/2)  - ai/2 - bi/2 + 1 / 4 = ab
-	 * @param a a != - i / 2
-	 * @param b b != - i / 2
-	 */
-	emlOperator(times) {
-		return plus(minus(minus(times0(plus(a, HALF_I), plus(b, HALF_I)), half_i_t(a)), half_i_t(b)),QUARTER);
-	}
-
-	/**
-	 * (a + i) / b - i / b = a / b
-	 * @param a a != - i
+	 * exp(ln a - ln b)
 	 */
 	emlOperator(divide) {
-		return minus(divide0(plus(a, I), b), divide0(I, b));
+		return exp(minus(ln(a), ln(b)));
 	}
 
 	emlOperator(power) {
