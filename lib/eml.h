@@ -90,15 +90,15 @@ namespace eml {
 
 	inline acc::integer emllib(const eml &);
 	inline eml emldecode(const acc::integer &);
-	inline acc::integer emllibS(const int &, const eml &);
-	inline eml emldecodeS(const int &, const acc::integer &);
+	inline acc::integer emllibS(int , const eml &);
+	inline eml emldecodeS(int , const acc::integer &);
 
-	inline eml emlexplict(const int &, const eml &, const std::vector<eml> &);
+	inline eml emlexplict(int , const eml &, const std::vector<eml> &);
 
-	inline eml emlexplict(const int & p1, const acc::integer & acc, const std::vector<eml> & p3) {
+	inline eml emlexplict(const int  p1, const acc::integer & acc, const std::vector<eml> & p3) {
 		return emlexplict(p1, emldecode(acc), p3);
 	}
-	inline eml emlexplict(const int & p1, const int & acc, const std::vector<eml> & p3) {
+	inline eml emlexplict(const int  p1, const int  acc, const std::vector<eml> & p3) {
 		return emlexplict(p1, emldecode(acc::integer(acc)), p3);
 	}
 

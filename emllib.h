@@ -7,7 +7,7 @@
 #include "lib/pairing.h"
 #include "lib/integer.h"
 
-namespace eml{
+namespace eml {
 	inline bool allow_algebra_expression = false;
 
 	inline acc::integer emllib(const eml &a) {
@@ -48,25 +48,25 @@ namespace eml{
 
 		eml res;
 		acc::integer cache = pairing::decode_a(n);
-		if (cache == acc::integer_1) {}
-			else if (cache <= pairing::algebra_domain + acc::integer_1) {
-				res.lValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
-			} else {
-				res.lValue = std::make_shared<eml>(emldecode(cache));
-			}
+		if (cache == acc::integer_1) {
+		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
+			res.lValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
+		} else {
+			res.lValue = std::make_shared<eml>(emldecode(cache));
+		}
 
 		cache = pairing::decode_b(n);
-		if (cache == acc::integer_1) {}
-			else if (cache <= pairing::algebra_domain + acc::integer_1) {
-				res.rValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
-			} else {
-				res.rValue = std::make_shared<eml>(emldecode(cache));
-			}
+		if (cache == acc::integer_1) {
+		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
+			res.rValue = std::make_shared<eml>(eml((cache - acc::integer_1).toSigned()));
+		} else {
+			res.rValue = std::make_shared<eml>(emldecode(cache));
+		}
 
 		return res;
 	}
 
-	inline std::vector<const char *> std_naming(const int &count) {
+	inline std::vector<const char *> std_naming(const int count) {
 		assert(count >= 0);
 		assert(count <= 26);
 
@@ -82,7 +82,7 @@ namespace eml{
 		return names;
 	}
 
-	inline void algebra_definition(const int &count, const std::vector<const char *> &names) {
+	inline void algebra_definition(const int count, const std::vector<const char *> &names) {
 		assert(count == names.size());
 
 		allow_algebra_expression = true;
@@ -94,20 +94,21 @@ namespace eml{
 		}
 	}
 
-	inline void algebra_definition(const int &count) {
+	inline void algebra_definition(const int count) {
 		algebra_definition(count, std_naming(count));
 	}
 
-	inline acc::integer emllibS(const int &count, const eml &x) {
+	inline acc::integer emllibS(const int count, const eml &x) {
 		algebra_definition(count);
 		return emllib(x);
 	}
-	inline eml emldecodeS(const int &count, const acc::integer &x) {
+
+	inline eml emldecodeS(const int count, const acc::integer &x) {
 		algebra_definition(count);
 		return emldecode(x);
 	}
 
-	inline eml emlexplict(const int &count, const eml &disc, const std::vector<eml> &par) {
+	inline eml emlexplict(const int count, const eml &disc, const std::vector<eml> &par) {
 		assert(count == par.size());
 		if (disc.type) {
 			return par[disc.type - 1];

@@ -88,7 +88,7 @@ const model::model core = {
 
 int main(const int argc, char* argv[]) {
 	for (int i = 0; i < core.size(); ++i) {
-		printf("%d. [%s]\n    -- %s\n", i, core[i].name, core[i].description);
+		printf("%d. [%s]\n    -- %s\n", i, core[i].name.c_str(), core[i].description.c_str());
 	}
 
 	printf("==================\n");
