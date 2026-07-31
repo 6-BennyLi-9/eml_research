@@ -212,6 +212,18 @@ namespace eml {
 	emlFunction(sigmoid) {
 		return inv(plus(ONE, exp(opposite(x))));
 	}
+
+	emlFunction(cosh) {
+		return mid(exp(x), exp(opposite(x)));
+	}
+
+	emlFunction(sinh) {
+		return half(minus(exp(x), exp(opposite(x))));
+	}
+
+	emlFunction(tanh) {
+		return divide(minus(exp(x), exp(opposite(x))), plus(exp(x), exp(opposite(x))));
+	}
 #undef emlOperator
 #undef emlFunction
 }
