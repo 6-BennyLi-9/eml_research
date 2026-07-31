@@ -6,7 +6,7 @@
 
 namespace lazy {
 	class table {
-		std::vector<std::pmr::vector<std::string>> mem;
+		std::vector<std::vector<std::string>> mem;
 		int xLen = 0;
 	public:
 		void wrap() {
