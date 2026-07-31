@@ -2,6 +2,7 @@
   <dictionary name="project">
     <words>
       <w>emldecode</w>
+      <w>emlexplict</w>
     </words>
   </dictionary>
 </component>
