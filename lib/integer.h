@@ -15,9 +15,8 @@ namespace acc {
 			push_back(n);
 			check();
 		}
-		explicit integer(const char* str) {
-			int i = strlen(str) - 1;
-			for (; i >= 0; --i) {
+		explicit integer(const std::string &str) {
+			for (int i = static_cast<int>(str.length()) - 1; i >= 0; --i) {
 				push_back(str[i] - '0');
 			}
 			check();

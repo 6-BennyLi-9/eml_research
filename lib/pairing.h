@@ -1,9 +1,6 @@
 #ifndef EML_RESEARCH_CANTOR_H
 #define EML_RESEARCH_CANTOR_H
-
-#ifndef EML_RESEARCH_INTEGER_H
 #include "integer.h"
-#endif
 
 namespace pairing {
 	inline acc::integer algebra_domain(0);

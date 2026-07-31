@@ -8,7 +8,7 @@
 #include "integer.h"
 
 namespace eml {
-	static std::map<signed, const char*> algebra;
+	static std::map<signed, std::string> algebra;
 	class eml {
 	public:
 		std::shared_ptr<eml> lValue, rValue;
@@ -38,7 +38,7 @@ namespace eml {
 
 		void print() const {
 			if (type) {
-				printf("%s", algebra[type]);
+				printf("%s", algebra[type].c_str());
 				return;
 			}
 			if (lValue) {
@@ -63,7 +63,7 @@ namespace eml {
 
 		void print0() const {
 			if (type) {
-				printf("%s", algebra[type]);
+				printf("%s", algebra[type].c_str());
 				return;
 			}
 
