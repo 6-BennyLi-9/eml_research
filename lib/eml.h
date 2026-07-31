@@ -224,6 +224,24 @@ namespace eml {
 	emlFunction(tanh) {
 		return divide(minus(exp(x), exp(opposite(x))), plus(exp(x), exp(opposite(x))));
 	}
+
+	emlFunction(rot) {
+		return times(x, I);
+	}
+
+	emlFunction(sin) {
+		return opposite(rot(sinh(rot(x))));
+	}
+
+	emlFunction(cos) {
+		return cosh(rot(x));
+	}
+
+	///不要用 sin/cos， 会严重增加复杂度
+	emlFunction(tan) {
+		return opposite(rot(tanh(rot(x))));
+	}
+
 #undef emlOperator
 #undef emlFunction
 }
