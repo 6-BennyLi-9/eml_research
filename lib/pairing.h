@@ -10,6 +10,7 @@ namespace pairing {
 	inline acc::integer pairing0(const acc::integer &a, const acc::integer &b) {
 		return (a + b - acc::integer_1) * (a + b - acc::integer(2)) / acc::integer_2 + b + acc::integer_1;
 	}
+
 	inline acc::integer pairing(const acc::integer &a, const acc::integer &b) {
 		return pairing0(a, b) + algebra_domain;
 	}
@@ -21,12 +22,13 @@ namespace pairing {
 	//the two below : decoder
 
 	inline acc::integer decode_a0(const acc::integer &x) {
-		return (t(x)*t(x) + acc::integer(4) - t(x) - acc::integer(2) * x) / acc::integer_2;
+		return (t(x) * t(x) + acc::integer(4) - t(x) - acc::integer(2) * x) / acc::integer_2;
 	}
 
 	inline acc::integer decode_b0(const acc::integer &x) {
-		return (acc::integer(3) * t(x) + acc::integer(2) * x - t(x)*t(x) - acc::integer(4)) / acc::integer_2;
+		return (acc::integer(3) * t(x) + acc::integer(2) * x - t(x) * t(x) - acc::integer(4)) / acc::integer_2;
 	}
+
 	inline acc::integer decode_a(const acc::integer &n) {
 		return decode_a0(n - algebra_domain);
 	}

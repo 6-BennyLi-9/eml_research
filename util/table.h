@@ -6,8 +6,9 @@
 
 namespace lazy {
 	class table {
-		std::vector<std::pmr::vector<std::string>> mem;
+		std::vector<std::pmr::vector<std::string> > mem;
 		int xLen = 0;
+
 	public:
 		void wrap() {
 			assert(!mem.empty());
@@ -40,13 +41,13 @@ namespace lazy {
 				printf("=");
 			}
 
-			for (const auto& line: mem) {
+			for (const auto &line: mem) {
 				if (line.size() != mem.front().size()) {
 					continue;
 				}
 
 				printf("\n||");
-				for (const auto& item: line) {
+				for (const auto &item: line) {
 					printf("%s", item.c_str());
 					for (int i = 1; i <= xLen - item.length(); ++i) {
 						printf(" ");
@@ -79,7 +80,7 @@ namespace lazy {
 
 				res.put(std::to_string(start_index_y + i));
 
-				for (const auto& item: mem[i]) {
+				for (const auto &item: mem[i]) {
 					res.put(item);
 				}
 			}

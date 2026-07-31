@@ -12,11 +12,11 @@ namespace lazy {
 		std::string description;
 		runnable runner;
 
-		model_sample(const char * name, const char * description, runnable runner):
-			name(name), description(description), runner(runner)
-		{}
+		model_sample(const char *name, const char *description, runnable runner) : name(name), description(description),
+			runner(runner) {
+		}
 
-		[[nodiscard]] auto run() const{
+		[[nodiscard]] auto run() const {
 			const auto start = current_time;
 			runner();
 			const auto end = current_time;
@@ -24,6 +24,7 @@ namespace lazy {
 			return std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 		}
 	};
+
 	typedef std::vector<model_sample> model;
 }
 #endif //EML_RESEARCH_MODEL_H

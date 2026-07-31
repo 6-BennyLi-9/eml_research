@@ -9,6 +9,7 @@
 
 namespace eml {
 	static std::map<signed, std::string> algebra;
+
 	class eml {
 	public:
 		std::shared_ptr<eml> lValue, rValue;
@@ -17,24 +18,27 @@ namespace eml {
 		signed type;
 
 
-		eml(const std::shared_ptr<eml> &leftValue, const std::shared_ptr<eml> &rightValue):
-			lValue(leftValue), rValue(rightValue), type(0)
-		{}
-		eml() : eml(nullptr, nullptr) {}
+		eml(const std::shared_ptr<eml> &leftValue, const std::shared_ptr<eml> &rightValue) : lValue(leftValue),
+			rValue(rightValue), type(0) {
+		}
 
-		explicit eml(const signed &type) :
-			lValue(nullptr), rValue(nullptr), type(type)
-		{}
+		eml() : eml(nullptr, nullptr) {
+		}
 
-		eml(const eml &leftValue, const eml &rightValue):
-			eml(std::make_shared<eml>(leftValue), std::make_shared<eml>(rightValue))
-		{}
-		eml(const std::shared_ptr<eml> &leftValue, const eml &rightValue):
-			eml(leftValue, std::make_shared<eml>(rightValue))
-		{}
-		eml(const eml &leftValue, const std::shared_ptr<eml> &rightValue):
-			eml(std::make_shared<eml>(leftValue), rightValue)
-		{}
+		explicit eml(const signed &type) : lValue(nullptr), rValue(nullptr), type(type) {
+		}
+
+		eml(const eml &leftValue, const eml &rightValue) : eml(std::make_shared<eml>(leftValue),
+																std::make_shared<eml>(rightValue)) {
+		}
+
+		eml(const std::shared_ptr<eml> &leftValue, const eml &rightValue) : eml(
+			leftValue, std::make_shared<eml>(rightValue)) {
+		}
+
+		eml(const eml &leftValue, const std::shared_ptr<eml> &rightValue) : eml(
+			std::make_shared<eml>(leftValue), rightValue) {
+		}
 
 		[[nodiscard]] std::string to_string() const {
 			if (type) {
@@ -43,17 +47,17 @@ namespace eml {
 			std::string str;
 
 			if (lValue) {
-				str+="e^(";
-				str+=lValue->to_string();
-				str+=')';
+				str += "e^(";
+				str += lValue->to_string();
+				str += ')';
 			} else {
-				str+='e';
+				str += 'e';
 			}
 
 			if (rValue) {
-				str+=" - ln(";
-				str+=rValue->to_string();
-				str+=')';
+				str += " - ln(";
+				str += rValue->to_string();
+				str += ')';
 			}
 
 			return str;
@@ -66,19 +70,19 @@ namespace eml {
 			std::string str = "eml(";
 
 			if (lValue) {
-				str+=lValue->to_string0();
+				str += lValue->to_string0();
 			} else {
-				str+='1';
+				str += '1';
 			}
 
 			str += ", ";
 			if (rValue) {
-				str+=rValue->to_string0();
+				str += rValue->to_string0();
 			} else {
-				str+='1';
+				str += '1';
 			}
 
-			str+=')';
+			str += ')';
 			return str;
 		}
 
@@ -102,16 +106,20 @@ namespace eml {
 	};
 
 	inline acc::integer emllib(const eml &);
+
 	inline eml emldecode(const acc::integer &);
-	inline acc::integer emllibS(int , const eml &);
-	inline eml emldecodeS(int , const acc::integer &);
 
-	inline eml emlexplict(int , const eml &, const std::vector<eml> &);
+	inline acc::integer emllibS(int, const eml &);
 
-	inline eml emlexplict(const int  p1, const acc::integer & acc, const std::vector<eml> & p3) {
+	inline eml emldecodeS(int, const acc::integer &);
+
+	inline eml emlexplict(int, const eml &, const std::vector<eml> &);
+
+	inline eml emlexplict(const int p1, const acc::integer &acc, const std::vector<eml> &p3) {
 		return emlexplict(p1, emldecode(acc), p3);
 	}
-	inline eml emlexplict(const int  p1, const int  acc, const std::vector<eml> & p3) {
+
+	inline eml emlexplict(const int p1, const int acc, const std::vector<eml> &p3) {
 		return emlexplict(p1, emldecode(acc::integer(acc)), p3);
 	}
 
@@ -184,7 +192,9 @@ namespace eml {
 	 * exp(ln a + ln b)
 	 */
 	emlOperator(times) {
-		return emlexplict(2, emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657")), {a,b});
+		return emlexplict(
+			2, emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657")),
+			{a, b});
 	}
 
 	/***

@@ -2,6 +2,7 @@
 #define EML_RESEARCH_INTEGER_H
 #include <cstdio>
 #include <vector>
+
 namespace acc {
 	/**
 	 * 高精度算法。存储的数为自然数。
@@ -15,6 +16,7 @@ namespace acc {
 			push_back(n);
 			check();
 		}
+
 		explicit integer(const std::string &str) {
 			for (int i = static_cast<int>(str.length()) - 1; i >= 0; --i) {
 				push_back(str[i] - '0');
@@ -44,7 +46,7 @@ namespace acc {
 
 		void printlnE() const;
 
-		[[nodiscard]] signed toSigned() const ;
+		[[nodiscard]] signed toSigned() const;
 	};
 
 	const auto integer_0 = integer(0);
@@ -205,7 +207,8 @@ namespace acc {
 			print(a);
 		}
 
-		printf("%d.%d%d%de%llu", a[a.size() - 1], a[a.size() - 2], a[a.size() - 3], a[a.size() - 4], static_cast<unsigned long long>(a.size() - 1));
+		printf("%d.%d%d%de%llu", a[a.size() - 1], a[a.size() - 2], a[a.size() - 3], a[a.size() - 4],
+				static_cast<unsigned long long>(a.size() - 1));
 	}
 
 	inline void printlnE(const integer &a) {
