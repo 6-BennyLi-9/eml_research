@@ -55,6 +55,7 @@ const model::model core = {
 		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
 		[]{
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
+				integer(x).println();
 				eml::eml de = eml::emldecode(integer(x));
 				de.println();
 				de.println0();
@@ -67,6 +68,7 @@ const model::model core = {
 			eml::algebra_definition(2,{"x", "y"});
 
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
+				integer(x).println();
 				eml::eml de = eml::emldecode(integer(x));
 				de.println();
 				de.println0();
