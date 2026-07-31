@@ -61,6 +61,31 @@ namespace lazy {
 			}
 			printf("\n");
 		}
+
+		[[nodiscard]] table with_index(const int start_index_x = 0, const int start_index_y = 0) const {
+			table res;
+
+			res.put("O");
+			for (int i = 0; i < mem.front().size(); ++i) {
+				res.put(std::to_string(start_index_x + i));
+			}
+
+			res.wrap();
+
+			for (int i = 0; i < mem.size(); ++i) {
+				if (mem[i].size() != mem.front().size()) {
+					continue;
+				}
+
+				res.put(std::to_string(start_index_y + i));
+
+				for (const auto& item: mem[i]) {
+					res.put(item);
+				}
+			}
+
+			return res;
+		}
 	};
 }
 #endif //EML_RESEARCH_TABLE_H

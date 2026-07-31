@@ -1,7 +1,6 @@
 // #define DEBUG
 
 #include <cstring>
-#include <stdexcept>
 
 #include "emllib.h"
 #include "util/model.h"
@@ -106,11 +105,12 @@ const lazy::model core = {
 	{
 		"SAMPLE EMLLIB STRICT", "Shows how does EMLLIB work strictly.",
 		[] {
-			constexpr int N = 5;
+			constexpr int N_S = 1;
+			constexpr int N_E = 17;
 			lazy::table t;
 
-			for (int i = 1; i <= N; ++i) {
-				for (int j = 1; j <= N; ++j) {
+			for (int i = N_S; i <= N_E; ++i) {
+				for (int j = N_S; j <= N_E; ++j) {
 					const auto s = eml::emldecodeS(i - 1, integer(j + (i + 1) * i / 2));
 
 					t.put(s.to_string());
@@ -119,13 +119,16 @@ const lazy::model core = {
 				t.wrap();
 			}
 
-			t.print();
+			printf("\n");
+			t.with_index(N_S, N_S).print();
 		}
 	}
 };
 
 
 int main(const int argc, char *argv[]) {
+	// freopen("main.out", "w", stdout);
+
 	for (int i = 0; i < core.size(); ++i) {
 		printf("%d. [%s]\n    -- %s\n", i, core[i].name.c_str(), core[i].description.c_str());
 	}
