@@ -75,8 +75,13 @@ namespace eml {
 			names.push_back(new char[]{static_cast<char>(i + 'x'), '\0'}); // NOLINT(*-narrowing-conversions)
 		}
 
-		for (int i = 3; i < count; i++) {
-			names.push_back(new char[]{static_cast<char>(i + 'a'), '\0'}); // NOLINT(*-narrowing-conversions)
+		for (int i = 3; i < count && i < 7; i++) {
+			// names.push_back(new char[]{static_cast<char>(i + ('a' - 3)), '\0'}); // NOLINT(*-narrowing-conversions)
+			names.push_back(new char[]{static_cast<char>(i + '^'), '\0'}); // NOLINT(*-narrowing-conversions)
+		}
+		for (int i = 7; i < count ; i++) {
+			// names.push_back(new char[]{static_cast<char>(i + ('a' - 3)), '\0'}); // NOLINT(*-narrowing-conversions)
+			names.push_back(new char[]{static_cast<char>(i + '_'), '\0'}); // NOLINT(*-narrowing-conversions)
 		}
 
 		return names;
