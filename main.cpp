@@ -24,9 +24,24 @@ const lazy::model core = {
 				2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657"));
 			eml::survey(op).println();
 			eml::algebra_definition(0);
+
 			op = eml::plus(eml::E, eml::TWO);
 			eml::survey(op).println();
-			const auto lib = eml::emllib(op);
+			auto lib = eml::emllib(op);
+
+			lib.println();
+			lib.printlnE();
+
+			op = eml::sin(eml::E);
+			eml::survey(op).println();
+			lib = eml::emllib(op);
+
+			lib.println();
+			lib.printlnE();
+
+			op = eml::tan(eml::ONE);
+			eml::survey(op).println();
+			lib = eml::emllib(op);
 
 			lib.println();
 			lib.printlnE();
