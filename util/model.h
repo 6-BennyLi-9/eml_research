@@ -4,7 +4,7 @@
 #include <chrono>
 #define current_time std::chrono::high_resolution_clock::now()
 
-namespace model {
+namespace lazy {
 	typedef void (*runnable)();
 
 	struct model_sample {

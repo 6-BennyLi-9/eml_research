@@ -8,6 +8,7 @@
 #include "lib/eml.h"
 #include "lib/emlsurvey.h"
 #include "lib/integer.h"
+#include "util/table.h"
 
 using acc::integer;
 
@@ -15,7 +16,7 @@ using acc::integer;
 const eml::eml example1 = eml::ln(eml::X);
 // exp 2
 const eml::eml example2 = eml::exp(eml::TWO);
-const model::model core = {
+const lazy::model core = {
 	{
 		// "高精度平方根测试", "debug",
 		"DEBUG", "debug",
@@ -36,12 +37,12 @@ const model::model core = {
 		// "EMLLIB 样例", "展示 EMLLIB 是如何工作的",
 		"SAMPLE EMLLIB", "Shows how does EMLLIB work.",
 		[] {
-			eml::algebra_definition(1, {"x"});
+			eml::algebra_definition(1);
 			example1.println();
 			example1.println0();
 			eml::emllib(example1).println();
 
-			eml::algebra_definition(0, {});
+			eml::algebra_definition(0);
 			example2.println();
 			example2.println0();
 			eml::emllib(example2).println();
@@ -106,17 +107,19 @@ const model::model core = {
 		"SAMPLE EMLLIB STRICT", "Shows how does EMLLIB work strictly.",
 		[] {
 			constexpr int N = 5;
+			lazy::table t;
 
 			for (int i = 1; i <= N; ++i) {
 				for (int j = 1; j <= N; ++j) {
-					printf("[%d, %d]: ",i,j);
-
 					const auto s = eml::emldecodeS(i - 1, integer(j + (i + 1) * i / 2));
 
-					s.println();
+					t.put(s.to_string());
 					// eml::survey(s).println();
 				}
+				t.wrap();
 			}
+
+			t.print();
 		}
 	}
 };
