@@ -21,6 +21,5 @@ jobs:
           
       - name: Run
         run: |
-          g++-${{ matrix.gcc }} -std=c++20 main.cpp -o app
+          g++-${{ matrix.gcc }} -std=c++20 main.cpp -o main
           ./main --mode 0
-          
