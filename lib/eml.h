@@ -242,6 +242,21 @@ namespace eml {
 		return opposite(rot(tanh(rot(x))));
 	}
 
+	emlFunction(arsinh) {
+		return ln(plus(x, norm(x, ONE)));
+	}
+
+	emlFunction(arcosh0) {
+		return ln(plus(x, norm(x, I)));
+	}
+
+	emlFunction(arcosh) {
+		return ln(plus(x, times(plus(x, ONE), minus(x, ONE))));
+	}
+
+	emlFunction(artanh) {
+		return half(ln(divide(plus(ONE, x), minus(ONE, x))));
+	}
 #undef emlOperator
 #undef emlFunction
 }
