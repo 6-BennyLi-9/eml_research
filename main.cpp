@@ -24,7 +24,7 @@ const model::model core = {
 			const auto times = eml::eml{eml::eml{nullptr, {{eml::ln({nullptr, eml::X}), eml::eml(2)}, nullptr}},nullptr};
 			times.println();
 			eml::emllib(times).println();
-			auto oldTimes = eml::unsafe_times(eml::eml(1), eml::eml(2));
+			auto oldTimes = eml::times0(eml::eml(1), eml::eml(2));
 			oldTimes.println();
 
 			acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657").println();

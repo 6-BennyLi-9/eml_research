@@ -132,16 +132,12 @@ namespace eml {
 		return {{NEGATIVE_INF, x}, nullptr};
 	}
 
-	/**
-	 * @param a a != 0
-	 * @param b
-	 */
-	emlOperator(unsafe_minus) {
+	emlOperator(minus0) {
 		return eml{ln(a), exp(b)};
 	}
 
 	//(e - 1) - e
-	const auto NEGATIVE_ONE = unsafe_minus(eml{ln(E), E}, E);
+	const auto NEGATIVE_ONE = minus0(eml{nullptr, E}, E);
 	//1 - ( -1 )
 	const auto TWO = eml{ZERO, exp(NEGATIVE_ONE)};
 
@@ -152,7 +148,7 @@ namespace eml {
 	 * @return the result
 	 */
 	emlOperator(root) {
-		return exp(exp(unsafe_minus(ln(ln(a)), ln(b))));
+		return exp(exp(minus0(ln(ln(a)), ln(b))));
 	}
 
 	emlFunction(sqrt) {
@@ -168,7 +164,7 @@ namespace eml {
 	 * @param b b != i
 	 */
 	emlOperator(minus) {
-		return unsafe_minus(unsafe_minus(I, b), unsafe_minus(I, a));
+		return minus0(minus0(I, b), minus0(I, a));
 	}
 
 	// emlFunction(opposite) {//T O D O : organize this
@@ -185,24 +181,24 @@ namespace eml {
 	 * @param a ab > 0
 	 * @param b ab > 0
 	 */
-	emlOperator(unsafe_times) {
+	emlOperator(times0) {
 		// return exp(plus(ln(a), ln(b)));
 		return emlexplict(2, emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657")), {a,b});
 	}
 
 	/***
-	 * @param a a != 0
+	 * @param a a > 0
 	 */
-	emlOperator(unsafe_divide) {
+	emlOperator(divide0) {
 		return exp(minus(ln(a), ln(b)));
 	}
 
-	const auto HALF_I = unsafe_divide(I, TWO);
-	const auto QUARTER = unsafe_divide(exp(opposite(ln(TWO))), TWO);
+	const auto HALF_I = divide0(I, TWO);
+	const auto QUARTER = divide0(exp(opposite(ln(TWO))), TWO);
 
 	// (i/2) * (a + i/2) + 1 / 4 = ai/2
 	emlFunction(half_i_t) {
-		return plus(unsafe_times(HALF_I, plus(x, HALF_I)), QUARTER);
+		return plus(times0(HALF_I, plus(x, HALF_I)), QUARTER);
 	}
 
 	/***
@@ -211,7 +207,7 @@ namespace eml {
 	 * @param b b != - i / 2
 	 */
 	emlOperator(times) {
-		return plus(minus(minus(unsafe_times(plus(a, HALF_I), plus(b, HALF_I)), half_i_t(a)), half_i_t(b)),QUARTER);
+		return plus(minus(minus(times0(plus(a, HALF_I), plus(b, HALF_I)), half_i_t(a)), half_i_t(b)),QUARTER);
 	}
 
 	/**
@@ -219,7 +215,7 @@ namespace eml {
 	 * @param a a != - i
 	 */
 	emlOperator(divide) {
-		return minus(unsafe_divide(plus(a, I), b), unsafe_divide(I, b));
+		return minus(divide0(plus(a, I), b), divide0(I, b));
 	}
 
 	emlOperator(power) {
