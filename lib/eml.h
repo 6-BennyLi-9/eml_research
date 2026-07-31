@@ -36,24 +36,54 @@ namespace eml {
 			eml(std::make_shared<eml>(leftValue), rightValue)
 		{}
 
-		void print() const {
+		[[nodiscard]] std::string to_string() const {
 			if (type) {
-				printf("%s", algebra[type].c_str());
-				return;
+				return algebra[type];
 			}
+			std::string str;
+
 			if (lValue) {
-				printf("e^(");
-				lValue->print();
-				printf(")");
+				str+="e^(";
+				str+=lValue->to_string();
+				str+=')';
 			} else {
-				printf("e");
+				str+='e';
 			}
 
 			if (rValue) {
-				printf(" - ln(");
-				rValue->print();
-				printf(")");
+				str+=" - ln(";
+				str+=rValue->to_string();
+				str+=')';
 			}
+
+			return str;
+		}
+
+		[[nodiscard]] std::string to_string0() const {
+			if (type) {
+				return algebra[type];
+			}
+			std::string str = "eml(";
+
+			if (lValue) {
+				str+=lValue->to_string0();
+			} else {
+				str+='1';
+			}
+
+			str += ", ";
+			if (rValue) {
+				str+=rValue->to_string0();
+			} else {
+				str+='1';
+			}
+
+			str+=')';
+			return str;
+		}
+
+		void print() const {
+			printf("%s", to_string().c_str());
 		}
 
 		void println() const {
@@ -62,24 +92,7 @@ namespace eml {
 		}
 
 		void print0() const {
-			if (type) {
-				printf("%s", algebra[type].c_str());
-				return;
-			}
-
-			printf("eml(");
-			if (lValue) {
-				lValue->print0();
-			} else {
-				printf("1");
-			}
-			printf(", ");
-			if (rValue) {
-				rValue->print0();
-			} else {
-				printf("1");
-			}
-			printf(")");
+			printf("%s", to_string0().c_str());
 		}
 
 		void println0() const {
