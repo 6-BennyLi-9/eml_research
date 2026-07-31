@@ -24,9 +24,24 @@ const model::model core = {
 			auto op = eml::emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657"));
 			eml::survey(op).println();
 			eml::algebra_definition(0);
+
 			op = eml::plus(eml::E, eml::TWO);
 			eml::survey(op).println();
-			const auto lib = eml::emllib(op);
+			auto lib = eml::emllib(op);
+
+			lib.println();
+			lib.printlnE();
+
+			op = eml::sin(eml::E);
+			eml::survey(op).println();
+			lib = eml::emllib(op);
+
+			lib.println();
+			lib.printlnE();
+			
+			op = eml::tan(eml::ONE);
+			eml::survey(op).println();
+			lib = eml::emllib(op);
 
 			lib.println();
 			lib.printlnE();
@@ -35,7 +50,7 @@ const model::model core = {
 	{
 		// "EMLLIB 样例", "展示 EMLLIB 是如何工作的",
 		"SAMPLE EMLLIB", "Shows how does EMLLIB work.",
-		[]{
+		[] {
 			eml::algebra_definition(1, {"x"});
 			example1.println();
 			example1.println0();
@@ -53,7 +68,7 @@ const model::model core = {
 	{
 		// "EMLLIB 解码样例", "展示 EMLLIB 是如何被解码的",
 		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
-		[]{
+		[] {
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
 				eml::eml de = eml::emldecode(integer(x));
 				de.println();
