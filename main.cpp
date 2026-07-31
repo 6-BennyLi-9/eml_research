@@ -91,7 +91,7 @@ int main(const int argc, char* argv[]) {
 		printf("%d. [%s]\n    -- %s\n", i, core[i].name.c_str(), core[i].description.c_str());
 	}
 
-	printf("==================\n");
+	printf("==========================\n");
 
 	if (argc - 1) {
 		printf("Pre-input detected, option: %s\n", argv[1]);
@@ -106,7 +106,7 @@ int main(const int argc, char* argv[]) {
 				return -1;
 			}
 
-			core[mode].runner();
+			printf("\n==========================\n\nFinished successfully in %lld ms.\n", static_cast<long long int>(core[mode].run().count()));
 		} else {
 			printf("Error: invalid option code: %s\n", argv[0]);
 		}
@@ -121,7 +121,7 @@ int main(const int argc, char* argv[]) {
 			return -1;
 		}
 
-		core[mode].runner();
+		printf("\n\n==========================\n\nFinished successfully in %lld ms.\n", static_cast<long long int>(core[mode].run().count()));
 	}
 	return 0;
 }
