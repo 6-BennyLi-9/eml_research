@@ -2,23 +2,24 @@ name: CPP DEBUG
 on:
   push:
     branches:
-    - main
+      - main
   workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        gcc: [14]
+        gcc: [12, 13, 14]
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Install GCC
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc g++
-          
+          sudo apt-get install -y gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+
       - name: Run
         run: |
-         /bin/bash debug_list.sh
+          g++-${{ matrix.gcc }} -std=c++20 main.cpp -o main
+          ./main --mode 0
