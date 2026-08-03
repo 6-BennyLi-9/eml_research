@@ -113,6 +113,33 @@ const lazy::model core = {
 			printf("\n");
 			t.with_index(N_S, N_S).print();
 		}
+	},
+	{
+		"CANTOR BINARY TREE DEPTH", "The pairing function which used in this programme is based on the cantor pairing function. This programme shows the depth of each tree in emllib.",
+		[] {
+			constexpr int N = 25;
+			lazy::table t;
+			std::map<acc::integer, acc::integer> mem;
+
+			mem[acc::integer_1] = acc::integer_0;
+			mem[acc::integer_2] = acc::integer_1;
+
+			const auto MAX_VAL = pairing::pairing0(acc::integer_1, acc::integer(N));
+
+			for (auto i = acc::integer(3); i <= MAX_VAL; i += acc::integer_1) {
+				mem[i] = std::max(mem[pairing::decode_a0(i)], mem[pairing::decode_b0(i)]) + acc::integer_1;
+			}
+
+			for (int i = 1; i <= N; ++i) {
+				t.put(std::to_string(i));
+				t.put(mem[pairing::pairing0(acc::integer_1, acc::integer(i))].to_string());
+				t.wrap();
+			}
+
+			t.print();
+
+			printf("Depth of <x,y> equals to the depth of the maximum of the depth of <x,1> and <1,y>.\nSee more in bin_depth.cpp.\n");
+		}
 	}
 };
 
