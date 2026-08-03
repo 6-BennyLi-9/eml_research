@@ -10,7 +10,7 @@ static lazy::table table;
 static std::map<acc::integer, acc::integer> mem;
 static int N = 4;
 static std::set<acc::integer> G;
-static std::set<acc::integer> G_p;
+static std::set<acc::integer> Gp;
 
 static void printG(int x) {
 	printf("G_%d = {", x);
@@ -25,6 +25,31 @@ static void printG(int x) {
 	}
 
 	printf("}\n");
+	printf("Gp_%d = {", x);
+	flag = false;
+	for (const auto& item: Gp) {
+		if (flag) {
+			printf(", ");
+		}
+		flag = true;
+
+		item.print();
+	}
+
+	printf("}\n");
+}
+
+static void printDecode(const acc::integer& x) {
+	if (x == acc::integer_1) {
+		printf("1");
+		return;
+	}
+
+	printf("<");
+	printDecode(pairing::decode_a0(x));
+	printf(", ");
+	printDecode(pairing::decode_b0(x));
+	printf(">");
 }
 
 int main(const int argc, char** argv) {
@@ -63,35 +88,30 @@ int main(const int argc, char** argv) {
 
 	printf("G_n: List of values which depth is n.\n");
 	G.insert(acc::integer_1);
-	G_p.insert(acc::integer_1);
+	Gp.insert(acc::integer_1);
 
-	std::set<acc::integer> G_n;
-	std::set<acc::integer> G_p_n;
+	std::set<acc::integer> Gnew;
 
 	printG(1);
 
 	for (int i = 1; i < N; ++i) {
-		G_n.clear();
-		G_p_n.clear();
+		Gnew.clear();
 
 		for (const auto& itemX: G) {
-			for (const auto& itemY: G_p) {
-				G_n.insert(pairing::pairing0(itemX, itemY));
+			for (const auto& itemY: Gp) {
+				Gnew.insert(pairing::pairing0(itemX, itemY));
+				Gnew.insert(pairing::pairing0(itemY, itemX));
 			}
 		}
 
-		for (const auto& itemX: G_p) {
-			for (const auto& itemY: G) {
-				G_n.insert(pairing::pairing0(itemX, itemY));
-			}
-		}
-
-		G = G_n;
-		for (const auto& item: G_n) {
-			G_p.insert(item);
+		G = Gnew;
+		for (const auto& item: G) {
+			Gp.insert(item);
 		}
 
 		printG(i + 1);
 	}
+
+	printDecode(acc::integer(21));
 	return 0;
 }
