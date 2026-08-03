@@ -79,7 +79,8 @@ const lazy::model core = {
 	{
 		"SAMPLE EMLSURVEY", "Shows how does EMLSURVEY work.",
 		[] {
-			auto op = eml::sin(eml::X);
+			eml::ZERO.println0();
+			auto op = eml::ZERO;
 			// op.println();
 			eml::survey(op).println();
 			printf("\n");
@@ -88,7 +89,7 @@ const lazy::model core = {
 			eml::survey(op).println();
 			printf("\n");
 
-			op = eml::divide(eml::sin(eml::X), eml::cos(eml::X));
+			op = eml::sin(eml::X) / eml::cos(eml::X);
 			eml::survey(op).println();
 			printf("\n");
 		}

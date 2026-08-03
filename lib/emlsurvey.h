@@ -6,7 +6,7 @@
 namespace eml {
 	class emlsurvey {
 	public:
-		acc::integer theta{};
+		acc::integer theta{1}, depth{1};
 		bool algebra = false;
 
 		[[nodiscard]] bool pure() const {
@@ -16,6 +16,8 @@ namespace eml {
 		void println() const {
 			printf("theta = ");
 			theta.println();
+			printf("depth = ");
+			depth.println();
 
 			if (algebra) {
 				printf("containing algebra\n");
@@ -37,15 +39,24 @@ namespace eml {
 			temp = survey(*target.lValue);
 			res.algebra |= temp.algebra;
 			res.theta += temp.theta;
+			res.depth = temp.depth;
+		} else {
+			res.theta += acc::integer_1;
 		}
 
 		if (target.rValue) {
 			temp = survey(*target.rValue);
 			res.algebra |= temp.algebra;
 			res.theta += temp.theta;
+
+			if (res.depth < temp.depth) {
+				res.depth = temp.depth;
+			}
+		} else {
+			res.theta += acc::integer_1;
 		}
 
-		res.theta += acc::integer_1;
+		res.depth += acc::integer_1;
 
 		return res;
 	}
