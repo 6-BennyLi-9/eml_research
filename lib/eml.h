@@ -212,7 +212,7 @@ namespace eml {
 		return power(x, TWO);
 	}
 
-	emlOperator(mid) {
+	emlOperator(avg) {
 		return half(plus(a, b));
 	}
 
@@ -228,7 +228,7 @@ namespace eml {
 
 	const auto PI = times(opposite(I), ln(NEGATIVE_ONE));
 
-	emlOperator(norm) {
+	emlOperator(hypot) {
 		return sqrt(plus(square(a), square(b)));
 	}
 
@@ -237,7 +237,7 @@ namespace eml {
 	}
 
 	emlFunction(cosh) {
-		return mid(exp(x), exp(opposite(x)));
+		return avg(exp(x), exp(opposite(x)));
 	}
 
 	emlFunction(sinh) {
@@ -270,11 +270,11 @@ namespace eml {
 	}
 
 	emlFunction(arsinh) {
-		return ln(plus(x, norm(x, ONE)));
+		return ln(plus(x, hypot(x, ONE)));
 	}
 
 	emlFunction(arcosh0) {
-		return ln(plus(x, norm(x, I)));
+		return ln(plus(x, hypot(x, I)));
 	}
 
 	emlFunction(arcosh) {
