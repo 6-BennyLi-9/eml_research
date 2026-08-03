@@ -9,8 +9,6 @@
 #include "lib/integer.h"
 #include "util/table.h"
 
-using acc::integer;
-
 // ln x
 const eml::eml example1 = eml::ln(eml::X);
 // exp 2
@@ -48,8 +46,8 @@ const lazy::model core = {
 		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
 		[] {
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
-				integer(x).println();
-				eml::eml de = eml::emldecode(integer(x));
+				acc::integer(x).println();
+				eml::eml de = eml::emldecode(acc::integer(x));
 				de.println();
 				de.println0();
 			}
@@ -61,8 +59,8 @@ const lazy::model core = {
 			eml::algebra_definition(2, {"x", "y"});
 
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
-				integer(x).println();
-				eml::eml de = eml::emldecode(integer(x));
+				acc::integer(x).println();
+				eml::eml de = eml::emldecode(acc::integer(x));
 				de.println();
 				de.println0();
 			}
@@ -104,7 +102,7 @@ const lazy::model core = {
 
 			for (int i = N_S; i <= N_E; ++i) {
 				for (int j = N_S; j <= N_E; ++j) {
-					const auto s = eml::emldecodeS(i - 1, integer(j + (i + 1) * i / 2));
+					const auto s = eml::emldecodeS(i - 1, acc::integer(j + (i + 1) * i / 2));
 
 					t.put(s.to_string());
 					// eml::survey(s).println();
