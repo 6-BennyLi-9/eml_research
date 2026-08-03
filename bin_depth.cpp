@@ -1,13 +1,31 @@
 #include <map>
+#include <set>
 #include <string>
 
 #include "lib/integer.h"
 #include "lib/pairing.h"
 #include "util/table.h"
 
-lazy::table table;
-std::map<acc::integer, acc::integer> mem;
-int N = 10;
+static lazy::table table;
+static std::map<acc::integer, acc::integer> mem;
+static int N = 4;
+static std::set<acc::integer> G;
+static std::set<acc::integer> G_p;
+
+static void printG(int x) {
+	printf("G_%d = {", x);
+	bool flag = false;
+	for (const auto& item: G) {
+		if (flag) {
+			printf(", ");
+		}
+		flag = true;
+
+		item.print();
+	}
+
+	printf("}\n");
+}
 
 int main(const int argc, char** argv) {
 	if (argc - 1) {
@@ -43,5 +61,37 @@ int main(const int argc, char** argv) {
 	}
 	table.print();
 
+	printf("G_n: List of values which depth is n.\n");
+	G.insert(acc::integer_1);
+	G_p.insert(acc::integer_1);
+
+	std::set<acc::integer> G_n;
+	std::set<acc::integer> G_p_n;
+
+	printG(1);
+
+	for (int i = 1; i < N; ++i) {
+		G_n.clear();
+		G_p_n.clear();
+
+		for (const auto& itemX: G) {
+			for (const auto& itemY: G_p) {
+				G_n.insert(pairing::pairing0(itemX, itemY));
+			}
+		}
+
+		for (const auto& itemX: G_p) {
+			for (const auto& itemY: G) {
+				G_n.insert(pairing::pairing0(itemX, itemY));
+			}
+		}
+
+		G = G_n;
+		for (const auto& item: G_n) {
+			G_p.insert(item);
+		}
+
+		printG(i + 1);
+	}
 	return 0;
 }
