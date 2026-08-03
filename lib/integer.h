@@ -244,7 +244,11 @@ namespace acc {
 			return "0";
 		}
 
-		return (*this / integer_10).to_string() + _digital(0);
+		const auto cache = (*this / integer_10);
+		if (cache == integer_0) {
+			return std::string() + _digital(0);
+		}
+		return cache.to_string() + _digital(0);
 	}
 
 	inline std::string integer::to_stringE() const {
