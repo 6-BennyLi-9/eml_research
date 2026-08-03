@@ -21,4 +21,4 @@ jobs:
           
       - name: Run
         run: |
-          debug_list.sh
+         /bin/bash debug_list.sh
