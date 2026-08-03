@@ -41,15 +41,20 @@ static void printG(int x) {
 
 static void printDecode(const acc::integer& x) {
 	if (x == acc::integer_1) {
-		printf("1");
+		// printf("1");
+		printf("Arrived Leaf: 1\n");
 		return;
 	}
 
-	printf("<");
+	printf("At %s, can be decode to <%s, %s>\n", x.to_string().c_str(), pairing::decode_a0(x).to_string().c_str(), pairing::decode_b0(x).to_string().c_str());
 	printDecode(pairing::decode_a0(x));
-	printf(", ");
 	printDecode(pairing::decode_b0(x));
-	printf(">");
+
+	// printf("<");
+	// printDecode(pairing::decode_a0(x));
+	// printf(", ");
+	// printDecode(pairing::decode_b0(x));
+	// printf(">");
 }
 
 int main(const int argc, char** argv) {
