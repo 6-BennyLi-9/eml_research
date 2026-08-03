@@ -123,18 +123,19 @@ namespace eml {
 		return emlexplict(p1, emldecode(acc::integer(acc)), p3);
 	}
 
-#define emlFunction(name) inline eml name(const eml &x)
-#define emlOperator(name) inline eml name(const eml &a, const eml &b)
+#define _eml_function(name) inline eml name(const eml &x)
+#define _eml_operator(name) inline eml name(const eml &a, const eml &b)
+#define _operator_override(raw, op) inline eml operator op(const eml &a, const eml &b) { return raw(a, b); }
 
 	const auto X = eml(1);
 	const auto E = eml();
 
-	emlFunction(ln) {
+	_eml_function(ln) {
 		// return eml(nullptr, eml(eml(nullptr, e), nullptr));
 		return eml{nullptr, eml{eml{nullptr, x}, nullptr}};
 	}
 
-	emlFunction(exp) {
+	_eml_function(exp) {
 		return eml{x, nullptr};
 	}
 
@@ -145,15 +146,15 @@ namespace eml {
 	const auto NEGATIVE_INF = ln(ZERO);
 
 	//使用负无穷消去第一项
-	emlFunction(opposite) {
+	_eml_function(opposite) {
 		return {NEGATIVE_INF, exp(x)};
 	}
 
-	emlFunction(inv) {
+	_eml_function(inv) {
 		return {{NEGATIVE_INF, x}, nullptr};
 	}
 
-	emlOperator(minus) {
+	_eml_operator(minus) {
 		return eml{ln(a), exp(b)};
 	}
 
@@ -168,15 +169,15 @@ namespace eml {
 	 * @param b 被开的根数幂次(b-th root)
 	 * @return the result
 	 */
-	emlOperator(root) {
+	_eml_operator(root) {
 		return exp(exp(minus(ln(ln(a)), ln(b))));
 	}
 
-	emlFunction(sqrt) {
+	_eml_function(sqrt) {
 		return root(x, TWO);
 	}
 
-	emlFunction(half) {
+	_eml_function(half) {
 		return exp(minus(ln(x), ln(TWO)));
 	}
 
@@ -184,14 +185,14 @@ namespace eml {
 	const auto I = exp(half(ln(NEGATIVE_ONE)));
 
 	// a - (- b)
-	emlOperator(plus) {
+	_eml_operator(plus) {
 		return minus(a, opposite(b));
 	}
 
 	/***
 	 * exp(ln a + ln b)
 	 */
-	emlOperator(times) {
+	_eml_operator(times) {
 		return emlexplict(
 			2, emldecodeS(2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657")),
 			{a, b});
@@ -200,19 +201,19 @@ namespace eml {
 	/***
 	 * exp(ln a - ln b)
 	 */
-	emlOperator(divide) {
+	_eml_operator(divide) {
 		return exp(minus(ln(a), ln(b)));
 	}
 
-	emlOperator(power) {
+	_eml_operator(power) {
 		return exp(exp(plus(ln(ln(a)), ln(b))));
 	}
 
-	emlFunction(square) {
+	_eml_function(square) {
 		return power(x, TWO);
 	}
 
-	emlOperator(avg) {
+	_eml_operator(avg) {
 		return half(plus(a, b));
 	}
 
@@ -222,81 +223,88 @@ namespace eml {
 	 * @param b 真数
 	 * @return log_a(b)
 	 */
-	emlOperator(log) {
+	_eml_operator(log) {
 		return divide(ln(b), ln(a));
 	}
 
 	const auto PI = times(opposite(I), ln(NEGATIVE_ONE));
 
-	emlOperator(hypot) {
+	_eml_operator(hypot) {
 		return sqrt(plus(square(a), square(b)));
 	}
 
-	emlFunction(sigmoid) {
+	_eml_function(sigmoid) {
 		return inv(plus(ONE, exp(opposite(x))));
 	}
 
-	emlFunction(cosh) {
+	_eml_function(cosh) {
 		return avg(exp(x), exp(opposite(x)));
 	}
 
-	emlFunction(sinh) {
+	_eml_function(sinh) {
 		return half(minus(exp(x), exp(opposite(x))));
 	}
 
-	emlFunction(tanh) {
+	_eml_function(tanh) {
 		return divide(minus(exp(x), exp(opposite(x))), plus(exp(x), exp(opposite(x))));
 	}
 
-	emlFunction(rot) {
+	_eml_function(rot) {
 		return times(x, I);
 	}
 
-	emlFunction(arot) {
+	_eml_function(arot) {
 		return opposite(rot(x));
 	}
 
-	emlFunction(sin) {
+	_eml_function(sin) {
 		return opposite(rot(sinh(rot(x))));
 	}
 
-	emlFunction(cos) {
+	_eml_function(cos) {
 		return cosh(rot(x));
 	}
 
 	///不要用 sin/cos， 会严重增加复杂度
-	emlFunction(tan) {
+	_eml_function(tan) {
 		return arot(tanh(rot(x)));
 	}
 
-	emlFunction(arsinh) {
+	_eml_function(arsinh) {
 		return ln(plus(x, hypot(x, ONE)));
 	}
 
-	emlFunction(arcosh0) {
+	_eml_function(arcosh0) {
 		return ln(plus(x, hypot(x, I)));
 	}
 
-	emlFunction(arcosh) {
+	_eml_function(arcosh) {
 		return ln(plus(x, times(plus(x, ONE), minus(x, ONE))));
 	}
 
-	emlFunction(artanh) {
+	_eml_function(artanh) {
 		return half(ln(divide(plus(ONE, x), minus(ONE, x))));
 	}
 
-	emlFunction(arcsin) {
+	_eml_function(arcsin) {
 		return arot(arsinh(rot(x)));
 	}
 
-	emlFunction(arccos) {
+	_eml_function(arccos) {
 		return arot(arcosh(x));
 	}
 
-	emlFunction(arctan) {
+	_eml_function(arctan) {
 		return arot(arctan(rot(x)));
 	}
-#undef emlOperator
-#undef emlFunction
+
+	_operator_override(plus, +)
+	_operator_override(minus, -)
+	_operator_override(times, *)
+	_operator_override(divide, /)
+	_operator_override(power, ^)
+#undef _eml_operator
+#undef _eml_function
+#undef _operator_override
 }
 #endif //EML_RESEARCH_EML_H
