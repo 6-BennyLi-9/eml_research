@@ -11,6 +11,8 @@ static std::map<acc::integer, acc::integer> mem;
 static int N = 4;
 static std::set<acc::integer> G;
 static std::set<acc::integer> Gp;
+static acc::integer C = acc::integer_1;
+static acc::integer C_p = acc::integer_1;
 
 static void printG(int x) {
 	printf("G_%d = {", x);
@@ -92,12 +94,14 @@ int main(const int argc, char** argv) {
 	table.print();
 
 	printf("G_n: List of values which depth is n.\n");
+	printf("C_n: Count of values which depth is n.\n");
 	G.insert(acc::integer_1);
 	Gp.insert(acc::integer_1);
 
 	std::set<acc::integer> Gnew;
 
 	printG(1);
+	printf("C_1:1\n");
 
 	for (int i = 1; i < N; ++i) {
 		Gnew.clear();
@@ -115,6 +119,14 @@ int main(const int argc, char** argv) {
 		}
 
 		printG(i + 1);
+
+		C = C * C + acc::integer_2 * C * (C_p - C);
+		C_p = C_p + C;
+
+		printf("C_%d:", i + 1);
+		C.println();
+
+		// printf("%d\n", static_cast<int>(G.size()));
 	}
 
 	printDecode(acc::integer(21));
