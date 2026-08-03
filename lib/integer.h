@@ -46,7 +46,11 @@ namespace acc {
 
 		void printlnE() const;
 
-		[[nodiscard]] signed toSigned() const;
+		[[nodiscard]] signed to_signed() const;
+
+		[[nodiscard]] std::string to_string() const;
+
+		[[nodiscard]] std::string to_stringE() const;
 	};
 
 	const auto integer_0 = integer(0);
@@ -192,9 +196,11 @@ namespace acc {
 	}
 
 	inline void print(const integer &a) {
-		for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i) {
-			printf("%d", a[i]);
-		}
+		// for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i) {
+		// 	printf("%d", a[i]);
+		// }
+
+		printf("%s", a.to_string().c_str());
 	}
 
 	inline void println(const integer &a) {
@@ -203,12 +209,14 @@ namespace acc {
 	}
 
 	inline void printE(const integer &a) {
-		if (a.size() < 8) {
-			print(a);
-		}
+		// if (a.size() < 8) {
+		// 	print(a);
+		// }
+		//
+		// printf("%d.%d%d%de%llu", a[a.size() - 1], a[a.size() - 2], a[a.size() - 3], a[a.size() - 4],
+		// 		static_cast<unsigned long long>(a.size() - 1));
 
-		printf("%d.%d%d%de%llu", a[a.size() - 1], a[a.size() - 2], a[a.size() - 3], a[a.size() - 4],
-				static_cast<unsigned long long>(a.size() - 1));
+		printf("%s", a.to_stringE().c_str());
 	}
 
 	inline void printlnE(const integer &a) {
@@ -221,13 +229,33 @@ namespace acc {
 	inline void integer::printE() const { acc::printE(*this); }
 	inline void integer::printlnE() const { acc::printlnE(*this); }
 
-	inline signed integer::toSigned() const {
+	inline signed integer::to_signed() const {
 		if (*this == integer_0) {
 			return 0;
 		}
 
-		return (*this)[0] + (*this / integer_10).toSigned() * 10;
+		return (*this)[0] + (*this / integer_10).to_signed() * 10;
 	}
+
+#define _digital(i) static_cast<char>('0' + (*this)[i])
+
+	inline std::string integer::to_string() const {
+		if (*this == integer_0) {
+			return "0";
+		}
+
+		return (*this / integer_10).to_string() + _digital(0);
+	}
+
+	inline std::string integer::to_stringE() const {
+		if (size() < 8) {
+			return to_string();
+		}
+
+		return std::string() + _digital(size() - 1) + "." + _digital(size() - 2) + _digital(size() - 3) +
+				_digital(size() - 4) + "e" + integer(static_cast<int>(size()) - 1).to_string();
+	}
+#undef _digital
 }
 
 #endif //EML_RESEARCH_INTEGER_H
