@@ -6,24 +6,6 @@
 #include "lib/eml.h"
 
 namespace eml {
-	class eml_expression {
-		const int _algebra_count;
-		const eml _target;
-	public:
-		eml_expression(const int algebra_count, eml target)
-			: _algebra_count(algebra_count),
-			_target(std::move(target)) {
-		}
-
-		[[nodiscard]] int algebra_count() const {
-			return _algebra_count;
-		}
-
-		[[nodiscard]] eml target() const {
-			return _target;
-		}
-	};
-
 	static eml_expression decodeEx0(const acc::integer &val) {
 		const auto lV = pairing::decode_a0(val);
 		const auto rV = pairing::decode_b0(val);
