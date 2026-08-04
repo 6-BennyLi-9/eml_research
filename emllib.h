@@ -131,6 +131,46 @@ namespace eml {
 
 		return res;
 	}
+
+	inline acc::integer emllib(const emlexp& n) {
+		return emllibS(n.algebra_count(), n.target());
+	}
+
+	static emlexp decodeEx0(const acc::integer &val) {
+		const auto lV = pairing::decode_a0(val);
+		const auto rV = pairing::decode_b0(val);
+
+		const auto w = lV * (lV + acc::integer_1) / acc::integer_2;
+
+		return {(lV - acc::integer_1).to_int(), emldecodeS((lV - acc::integer_1).to_int(), rV + w)};
+	}
+
+	static emlexp decodeEx(const acc::integer &val) {
+		if (val.negative) {
+			return {1, eml(val.opposite().to_int())};
+		}
+
+		if (val == acc::integer_0) {
+			throw std::invalid_argument("DECLARE ONE");
+		}
+
+		return decodeEx0(val + acc::integer_1);
+	}
+
+	static acc::integer emllibEx(const int algebra_count, const eml &target) {
+		if (target.type) {
+			//leaf
+			return acc::integer{-target.type};
+		}
+
+		const auto w = algebra_count * (algebra_count - 1) / 2;
+
+		return pairing::pairing0(acc::integer{algebra_count + 1}, emllibS(algebra_count, target) - acc::integer{w});
+	}
+
+	static acc::integer emllibEx(const emlexp &val) {
+		return emllibEx(val.algebra_count(), val.target());
+	}
 }
 
 #endif //EML_RESEARCH_EMLLIB_H

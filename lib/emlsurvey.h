@@ -7,7 +7,7 @@ namespace eml {
 	class emlsurvey {
 	public:
 		acc::integer theta{1}, depth{1};
-		bool algebra = false;
+		int algebra = 0;
 
 		[[nodiscard]] bool pure() const {
 			return !algebra;
@@ -31,13 +31,13 @@ namespace eml {
 		emlsurvey res, temp;
 
 		if (target.type) {
-			res.algebra = true;
+			res.algebra = target.type;
 			return res;
 		}
 
 		if (target.lValue) {
 			temp = survey(*target.lValue);
-			res.algebra |= temp.algebra;
+			res.algebra = std::max(res.algebra, temp.algebra);
 			res.theta += temp.theta;
 			res.depth = temp.depth;
 		} else {
@@ -46,7 +46,7 @@ namespace eml {
 
 		if (target.rValue) {
 			temp = survey(*target.rValue);
-			res.algebra |= temp.algebra;
+			res.algebra = std::max(res.algebra, temp.algebra);
 			res.theta += temp.theta;
 
 			if (res.depth < temp.depth) {
@@ -59,6 +59,14 @@ namespace eml {
 		res.depth += acc::integer_1;
 
 		return res;
+	}
+
+	inline emlexp make_exp(const eml& target, const emlsurvey& survey) {
+		return {survey.algebra, target};
+	}
+
+	inline emlexp make_exp(const eml& target) {
+		return make_exp(target, survey(target));
 	}
 }
 

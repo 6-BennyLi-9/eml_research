@@ -306,5 +306,23 @@ namespace eml {
 #undef _eml_operator
 #undef _eml_function
 #undef _operator_override
+
+	class emlexp {
+		const int _algebra_count;
+		const eml _target;
+	public:
+		emlexp(const int algebra_count, eml target)
+			: _algebra_count(algebra_count),
+			_target(std::move(target)) {
+		}
+
+		[[nodiscard]] int algebra_count() const {
+			return _algebra_count;
+		}
+
+		[[nodiscard]] eml target() const {
+			return _target;
+		}
+	};
 }
 #endif //EML_RESEARCH_EML_H
