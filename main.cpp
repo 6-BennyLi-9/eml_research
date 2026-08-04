@@ -95,7 +95,7 @@ const lazy::model core = {
 		}
 	},
 	{
-		"SAMPLE EMLLIB STRICT", "Shows how does EMLLIB work strictly.",
+		"SAMPLE EMLLIB PLUS", "Shows how does EMLLIB work strictly.",
 		[] {
 			constexpr int N_S = 1;
 			constexpr int N_E = 17;
