@@ -12,7 +12,11 @@ namespace acc {
 		integer() : integer(0) {
 		}
 
-		explicit integer(const int n) {
+		explicit integer(int n) {
+			if (n < 0) {
+				negative = true;
+				n = - n;
+			}
 			push_back(n);
 			check();
 		}
@@ -100,29 +104,33 @@ namespace acc {
 		return !(a < b);
 	}
 
-	inline integer &operator+=(integer &, const integer &);
+	inline integer &operator+=(integer &, integer);
 
 	inline integer &operator-=(integer &, integer);
 
-	inline integer &operator+=(integer &a, const integer &b) {
+	inline integer &operator+=(integer &a, integer b) {
 		if (a.negative != b.negative) {
-			return a -= (b.opposite());
+			b.negative = !b.negative;
+			return a -= b;
 		}
 		if (a.size() < b.size())a.resize(b.size());
 		for (int i = 0; i != b.size(); ++i)a[i] += b[i];
 		return a.check();
 	}
 
-	inline integer operator+(integer a, const integer &b) {
-		return a += b;
+	inline integer operator+(integer a, integer b) {
+		return a += std::move(b);
 	}
 
 	inline integer &operator-=(integer &a, integer b) {
 		if (a.negative != b.negative) {
-			return a += (b.opposite());
+			b.negative = !b.negative;
+			return a += b;
 		}
 		if (a.negative) {
-			return a.opposite() -= b.opposite();
+			a.negative = false;
+			b.negative = false;
+			std::swap(a, b);
 		}
 
 		if (a < b) {
@@ -148,13 +156,14 @@ namespace acc {
 
 	inline integer operator*(integer a, integer b) {
 		integer ans;
-		ans.negative = a.negative ^ b.negative;
+		const bool flag = a.negative != b.negative;
 		a.negative = false;
 		b.negative = false;
 		ans.assign(a.size() + b.size() - 1, 0);
 		for (int i = 0; i != a.size(); ++i)
 			for (int j = 0; j != b.size(); ++j)
 				ans[i + j] += a[i] * b[j];
+		if (flag) ans.negative = true;
 		return ans.check();
 	}
 
@@ -164,7 +173,7 @@ namespace acc {
 
 	inline integer operator/(integer a, integer b) {
 		integer ans;
-		ans.negative = a.negative ^ b.negative;
+		const bool flag = a.negative != b.negative;
 		a.negative = false;
 		b.negative = false;
 		for (int t = static_cast<int>(a.size() - b.size()); a >= b; --t) {
@@ -177,6 +186,7 @@ namespace acc {
 				ans += d;
 			}
 		}
+		if (flag) ans.negative = true;
 		return ans.check();
 	}
 
