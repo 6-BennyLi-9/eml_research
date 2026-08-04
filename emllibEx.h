@@ -6,7 +6,7 @@
 #include "lib/eml.h"
 
 namespace eml {
-	static eml_expression decodeEx0(const acc::integer &val) {
+	static emlexp decodeEx0(const acc::integer &val) {
 		const auto lV = pairing::decode_a0(val);
 		const auto rV = pairing::decode_b0(val);
 
@@ -15,7 +15,7 @@ namespace eml {
 		return {(lV - acc::integer_1).to_int(), emldecodeS((lV - acc::integer_1).to_int(), rV + w)};
 	}
 
-	static eml_expression decodeEx(const acc::integer &val) {
+	static emlexp decodeEx(const acc::integer &val) {
 		if (val.negative) {
 			return {1, eml(val.opposite().to_int())};
 		}
