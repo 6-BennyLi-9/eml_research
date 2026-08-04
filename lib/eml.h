@@ -8,14 +8,14 @@
 #include "integer.h"
 
 namespace eml {
-	static std::map<signed, std::string> algebra;
+	static std::map<int, std::string> algebra;
 
 	class eml {
 	public:
 		std::shared_ptr<eml> lValue, rValue;
 		//0 -- normal expression
 		//1,2,3,... --- algebra
-		signed type;
+		int type;
 
 
 		eml(const std::shared_ptr<eml> &leftValue, const std::shared_ptr<eml> &rightValue) : lValue(leftValue),
@@ -25,7 +25,7 @@ namespace eml {
 		eml() : eml(nullptr, nullptr) {
 		}
 
-		explicit eml(const signed &type) : lValue(nullptr), rValue(nullptr), type(type) {
+		explicit eml(const int &type) : lValue(nullptr), rValue(nullptr), type(type) {
 		}
 
 		eml(const eml &leftValue, const eml &rightValue) : eml(std::make_shared<eml>(leftValue),

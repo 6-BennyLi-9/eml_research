@@ -56,7 +56,7 @@ namespace acc {
 
 		void printlnE() const;
 
-		[[nodiscard]] signed to_signed() const;
+		[[nodiscard]] int to_int() const;
 
 		[[nodiscard]] std::string to_string() const;
 
@@ -237,12 +237,12 @@ namespace acc {
 	inline void integer::printE() const { acc::printE(*this); }
 	inline void integer::printlnE() const { acc::printlnE(*this); }
 
-	inline signed integer::to_signed() const {
+	inline int integer::to_int() const {
 		if (*this == integer_0) {
 			return 0;
 		}
 
-		return (*this)[0] + (*this / integer_10).to_signed() * 10;
+		return (*this)[0] + (*this / integer_10).to_int() * 10;
 	}
 
 #define _digital(i) static_cast<char>('0' + (*this)[i])

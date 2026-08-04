@@ -50,7 +50,7 @@ namespace eml {
 		acc::integer cache = pairing::decode_a(n);
 		if (cache == acc::integer_1) {
 		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
-			res.lValue = std::make_shared<eml>(eml((cache - acc::integer_1).to_signed()));
+			res.lValue = std::make_shared<eml>(eml((cache - acc::integer_1).to_int()));
 		} else {
 			res.lValue = std::make_shared<eml>(emldecode(cache));
 		}
@@ -58,7 +58,7 @@ namespace eml {
 		cache = pairing::decode_b(n);
 		if (cache == acc::integer_1) {
 		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
-			res.rValue = std::make_shared<eml>(eml((cache - acc::integer_1).to_signed()));
+			res.rValue = std::make_shared<eml>(eml((cache - acc::integer_1).to_int()));
 		} else {
 			res.rValue = std::make_shared<eml>(emldecode(cache));
 		}
