@@ -66,34 +66,35 @@ namespace eml {
 		return res;
 	}
 
-	inline std::vector<const char *> std_naming(const int count) {
+	inline std::vector<std::string> std_naming(const int count) {
 		assert(count >= 0);
-		assert(count <= 26);
 
-		std::vector<const char *> names;
+		std::vector<std::string> names;
 		for (int i = 0; i < count && i < 3; i++) {
 			names.push_back(new char[]{static_cast<char>(i + 'x'), '\0'}); // NOLINT(*-narrowing-conversions)
 		}
 
 		for (int i = 3; i < count && i < 7; i++) {
-			// names.push_back(new char[]{static_cast<char>(i + ('a' - 3)), '\0'}); // NOLINT(*-narrowing-conversions)
 			names.push_back(new char[]{static_cast<char>(i + '^'), '\0'}); // NOLINT(*-narrowing-conversions)
 		}
-		for (int i = 7; i < count; i++) {
-			// names.push_back(new char[]{static_cast<char>(i + ('a' - 3)), '\0'}); // NOLINT(*-narrowing-conversions)
+
+		for (int i = 7; i < count && i < 26; i++) {
 			names.push_back(new char[]{static_cast<char>(i + '_'), '\0'}); // NOLINT(*-narrowing-conversions)
+		}
+
+		for (int i = 26; i < count ; i++) {
+			names.push_back(std::string{"A_"} + std::to_string(i -25)); // NOLINT(*-narrowing-conversions)
 		}
 
 		return names;
 	}
 
-	inline void algebra_definition(const int count, const std::vector<const char *> &names) {
+	inline void algebra_definition(const int count, const std::vector<std::string> &names) {
 		assert(count == names.size());
 
 		allow_algebra_expression = true;
 		pairing::algebra_domain = acc::integer(count);
 
-		algebra.clear();
 		for (int i = 0; i < count; i++) {
 			algebra[i + 1] = names[i];
 		}
