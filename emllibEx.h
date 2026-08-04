@@ -1,18 +1,18 @@
 #ifndef EML_RESEARCH_EMLLIB_PLUS_H
 #define EML_RESEARCH_EMLLIB_PLUS_H
+#include <utility>
+
 #include "emllib.h"
 #include "lib/eml.h"
 
 namespace eml {
-	const auto DECLARE_ONE = std::invalid_argument("DECLARE ONE");
-
 	class eml_expression {
 		const int _algebra_count;
 		const eml _target;
 	public:
-		eml_expression(const int algebra_count, const eml &target)
+		eml_expression(const int algebra_count, eml target)
 			: _algebra_count(algebra_count),
-			_target(target) {
+			_target(std::move(target)) {
 		}
 
 		[[nodiscard]] int algebra_count() const {
@@ -37,8 +37,9 @@ namespace eml {
 		if (val.negative) {
 			return {1, eml(val.opposite().to_int())};
 		}
+
 		if (val == acc::integer_0) {
-			throw DECLARE_ONE;
+			throw std::invalid_argument("DECLARE ONE");
 		}
 
 		return decodeEx0(val - acc::integer_1);
