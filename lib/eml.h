@@ -227,8 +227,6 @@ namespace eml {
 		return divide(ln(b), ln(a));
 	}
 
-	const auto PI = times(opposite(I), ln(NEGATIVE_ONE));
-
 	_eml_operator(hypot) {
 		return sqrt(plus(square(a), square(b)));
 	}
@@ -297,6 +295,8 @@ namespace eml {
 	_eml_function(arctan) {
 		return arot(arctan(rot(x)));
 	}
+
+	const auto PI = arot(ln(NEGATIVE_ONE));
 
 	_operator_override(plus, +)
 	_operator_override(minus, -)
