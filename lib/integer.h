@@ -1,14 +1,14 @@
 #ifndef EML_RESEARCH_INTEGER_H
 #define EML_RESEARCH_INTEGER_H
 #include <cstdio>
+#include <utility>
 #include <vector>
 
 namespace acc {
-	/**
-	 * 高精度算法。存储的数为自然数。
-	 */
 	class integer : public std::vector<int> {
 	public:
+		bool negative = false;
+
 		integer() : integer(0) {
 		}
 
@@ -26,7 +26,11 @@ namespace acc {
 
 		integer &check() {
 			while (!empty() && !back())pop_back();
-			if (empty())return *this;
+			if (empty()) {
+				// == 0
+				negative = false;
+				return *this;
+			}
 			for (int i = 1; i < size(); ++i) {
 				(*this)[i] += (*this)[i - 1] / 10;
 				(*this)[i - 1] %= 10;
@@ -36,6 +40,12 @@ namespace acc {
 				(*this)[size() - 2] %= 10;
 			}
 			return *this;
+		}
+
+		[[nodiscard]] integer &opposite() const {
+			integer ans = *this;
+			ans.negative = !ans.negative;
+			return ans.check();
 		}
 
 		void print() const;
@@ -59,6 +69,7 @@ namespace acc {
 	const auto integer_10 = integer(10);
 
 	inline bool operator!=(const integer &a, const integer &b) {
+		if (a.negative != b.negative)return true;
 		if (a.size() != b.size())return true;
 		for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i)
 			if (a[i] != b[i])return true;
@@ -70,6 +81,7 @@ namespace acc {
 	}
 
 	inline bool operator<(const integer &a, const integer &b) {
+		if (a.negative != b.negative)return a.negative;
 		if (a.size() != b.size())return a.size() < b.size();
 		for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i)
 			if (a[i] != b[i])return a[i] < b[i];
@@ -88,7 +100,14 @@ namespace acc {
 		return !(a < b);
 	}
 
+	inline integer &operator+=(integer &, const integer &);
+
+	inline integer &operator-=(integer &, integer);
+
 	inline integer &operator+=(integer &a, const integer &b) {
+		if (a.negative != b.negative) {
+			return a -= (b.opposite());
+		}
 		if (a.size() < b.size())a.resize(b.size());
 		for (int i = 0; i != b.size(); ++i)a[i] += b[i];
 		return a.check();
@@ -99,15 +118,18 @@ namespace acc {
 	}
 
 	inline integer &operator-=(integer &a, integer b) {
-		if (a < b) {
-#ifdef DEBUG
-			printf("[WARNING] Minus Operation Has Reversed, with a:");
-			a.print();
-			printf(", b:");
-			b.println();
-#endif
-			swap(a, b);
+		if (a.negative != b.negative) {
+			return a += (b.opposite());
 		}
+		if (a.negative) {
+			return a.opposite() -= b.opposite();
+		}
+
+		if (a < b) {
+			std::swap(a, b);
+			a.negative = true;
+		}
+
 		for (int i = 0; i != b.size(); a[i] -= b[i], ++i)
 			if (a[i] < b[i]) {
 				int j = i + 1;
@@ -120,25 +142,31 @@ namespace acc {
 		return a.check();
 	}
 
-	inline integer operator-(integer a, const integer &b) {
-		return a -= b;
+	inline integer operator-(integer a, integer b) {
+		return a -= std::move(b);
 	}
 
-	inline integer operator*(const integer &a, const integer &b) {
-		integer n;
-		n.assign(a.size() + b.size() - 1, 0);
+	inline integer operator*(integer a, integer b) {
+		integer ans;
+		ans.negative = a.negative ^ b.negative;
+		a.negative = false;
+		b.negative = false;
+		ans.assign(a.size() + b.size() - 1, 0);
 		for (int i = 0; i != a.size(); ++i)
 			for (int j = 0; j != b.size(); ++j)
-				n[i + j] += a[i] * b[j];
-		return n.check();
+				ans[i + j] += a[i] * b[j];
+		return ans.check();
 	}
 
 	inline integer &operator*=(integer &a, const integer &b) {
 		return a = a * b;
 	}
 
-	inline integer divideF(integer &a, const integer &b) {
+	inline integer operator/(integer a, integer b) {
 		integer ans;
+		ans.negative = a.negative ^ b.negative;
+		a.negative = false;
+		b.negative = false;
 		for (int t = static_cast<int>(a.size() - b.size()); a >= b; --t) {
 			integer d;
 			d.assign(t + 1, 0);
@@ -149,27 +177,16 @@ namespace acc {
 				ans += d;
 			}
 		}
-		return ans;
-	}
-
-	inline integer operator/(integer a, const integer &b) {
-		return divideF(a, b);
+		return ans.check();
 	}
 
 	inline integer &operator/=(integer &a, const integer &b) {
 		return a = a / b;
 	}
 
-	inline integer &operator%=(integer &a, const integer &b) {
-		divideF(a, b);
-		return a;
-	}
-
-	inline integer operator%(integer a, const integer &b) {
-		return a %= b;
-	}
-
 	inline integer pow(const integer &n, const integer &k) {
+		assert(!k.negative);
+
 		if (k.empty())return integer_1;
 		if (k == integer_2)return n * n;
 		if (k.front() % 2)return n * pow(n, k - integer_1);
@@ -181,6 +198,8 @@ namespace acc {
 	}
 
 	inline integer sqrt(const integer &n) {
+		assert(!n.negative);
+
 		integer left = integer_1, right = n;
 		while (right > left + integer_1) {
 			if (mid(left, right) * mid(left, right) < n) {
@@ -196,10 +215,6 @@ namespace acc {
 	}
 
 	inline void print(const integer &a) {
-		// for (int i = static_cast<int>(a.size()) - 1; i >= 0; --i) {
-		// 	printf("%d", a[i]);
-		// }
-
 		printf("%s", a.to_string().c_str());
 	}
 
@@ -209,13 +224,6 @@ namespace acc {
 	}
 
 	inline void printE(const integer &a) {
-		// if (a.size() < 8) {
-		// 	print(a);
-		// }
-		//
-		// printf("%d.%d%d%de%llu", a[a.size() - 1], a[a.size() - 2], a[a.size() - 3], a[a.size() - 4],
-		// 		static_cast<unsigned long long>(a.size() - 1));
-
 		printf("%s", a.to_stringE().c_str());
 	}
 
@@ -240,6 +248,10 @@ namespace acc {
 #define _digital(i) static_cast<char>('0' + (*this)[i])
 
 	inline std::string integer::to_string() const {
+		if (negative) {
+			return "-" + this->opposite().to_string();
+		}
+
 		if (*this == integer_0) {
 			return "0";
 		}
@@ -252,6 +264,10 @@ namespace acc {
 	}
 
 	inline std::string integer::to_stringE() const {
+		if (negative) {
+			return "-" + this->opposite().to_string();
+		}
+
 		if (size() < 8) {
 			return to_string();
 		}
