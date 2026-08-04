@@ -3,6 +3,7 @@
 #include <cstring>
 
 #include "emllib.h"
+#include "emllibEx.h"
 #include "util/model.h"
 #include "lib/eml.h"
 #include "lib/emlsurvey.h"
@@ -100,7 +101,7 @@ const lazy::model core = {
 		}
 	},
 	{
-		"SAMPLE EMLLIB STRICT", "Shows how does EMLLIB work strictly.",
+		"SAMPLE EMLLIB PLUS", "Shows how does EMLLIB work strictly.",
 		[] {
 			constexpr int N_S = 1;
 			constexpr int N_E = 17;
@@ -145,6 +146,23 @@ const lazy::model core = {
 			t.print();
 
 			printf("Depth of <x,y> equals to the depth of the maximum of the depth of <x,1> and <1,y>.\nSee more in bin_depth.cpp.\n");
+		}
+	},
+	{
+		"SAMPLE EMLLIB EX", "Shows how does EMLLIB EX work.",
+		[] {
+			eml::algebra_definition(50);
+			printf("Range: {..., -3, -2, -1}\n");
+
+			eml::decodeEx(acc::integer{-3}).target().println();
+			eml::decodeEx(acc::integer{-2}).target().println();
+			eml::decodeEx(acc::integer{-1}).target().println();
+
+			printf("Range: {0}\n1\nRange: {1, 2, 3, ...}\n");
+
+			eml::decodeEx(acc::integer{1}).target().println();
+			eml::decodeEx(acc::integer{2}).target().println();
+			eml::decodeEx(acc::integer{3}).target().println();
 		}
 	}
 };
