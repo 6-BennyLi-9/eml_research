@@ -12,7 +12,11 @@ namespace acc {
 		integer() : integer(0) {
 		}
 
-		explicit integer(const int n) {
+		explicit integer(int n) {
+			if (n < 0) {
+				negative = true;
+				n = - n;
+			}
 			push_back(n);
 			check();
 		}
