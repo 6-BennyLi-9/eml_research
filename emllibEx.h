@@ -24,7 +24,7 @@ namespace eml {
 		}
 	};
 
-	static eml_expression decode0(const acc::integer &val) {
+	static eml_expression decodeEx0(const acc::integer &val) {
 		const auto lV = pairing::decode_a0(val);
 		const auto rV = pairing::decode_b0(val);
 
@@ -33,7 +33,7 @@ namespace eml {
 		return {(lV - acc::integer_1).to_int(), emldecodeS((lV - acc::integer_1).to_int(), rV + w)};
 	}
 
-	static eml_expression decode(const acc::integer &val) {
+	static eml_expression decodeEx(const acc::integer &val) {
 		if (val.negative) {
 			return {1, eml(val.opposite().to_int())};
 		}
@@ -41,10 +41,10 @@ namespace eml {
 			throw DECLARE_ONE;
 		}
 
-		return decode0(val - acc::integer_1);
+		return decodeEx0(val - acc::integer_1);
 	}
 
-	static acc::integer emllib_plus(const int algebra_count, const eml &target) {
+	static acc::integer emllibEx(const int algebra_count, const eml &target) {
 		if (target.type) {
 			//leaf
 			return acc::integer{-target.type};
