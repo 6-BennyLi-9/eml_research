@@ -151,11 +151,18 @@ const lazy::model core = {
 	{
 		"SAMPLE EMLLIB EX", "Shows how does EMLLIB EX work.",
 		[] {
+			eml::algebra_definition(50);
 			printf("Range: {..., -3, -2, -1}\n");
 
 			eml::decodeEx(acc::integer{-3}).target().println();
 			eml::decodeEx(acc::integer{-2}).target().println();
 			eml::decodeEx(acc::integer{-1}).target().println();
+
+			printf("Range: {0}\n1\nRange: {1, 2, 3, ...}\n");
+
+			eml::decodeEx(acc::integer{1}).target().println();
+			eml::decodeEx(acc::integer{2}).target().println();
+			eml::decodeEx(acc::integer{3}).target().println();
 		}
 	}
 };

@@ -42,7 +42,7 @@ namespace eml {
 			throw std::invalid_argument("DECLARE ONE");
 		}
 
-		return decodeEx0(val - acc::integer_1);
+		return decodeEx0(val + acc::integer_1);
 	}
 
 	static acc::integer emllibEx(const int algebra_count, const eml &target) {
