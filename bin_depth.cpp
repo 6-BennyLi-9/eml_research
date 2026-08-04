@@ -7,12 +7,12 @@
 #include "util/table.h"
 
 static lazy::table table;
-static std::map<acc::integer, acc::integer> mem;
+static std::map<acc::unsigned_integer, acc::unsigned_integer> mem;
 static int N = 4;
-static std::set<acc::integer> G;
-static std::set<acc::integer> Gp;
-static acc::integer C = acc::integer_1;
-static acc::integer C_p = acc::integer_1;
+static std::set<acc::unsigned_integer> G;
+static std::set<acc::unsigned_integer> Gp;
+static acc::unsigned_integer C = acc::integer_1;
+static acc::unsigned_integer C_p = acc::integer_1;
 
 static void printG(int x) {
 	printf("G_%d = {", x);
@@ -41,7 +41,7 @@ static void printG(int x) {
 	printf("}\n");
 }
 
-static void printDecode(const acc::integer& x) {
+static void printDecode(const acc::unsigned_integer& x) {
 	if (x == acc::integer_1) {
 		// printf("1");
 		printf("Arrived Leaf: 1\n");
@@ -69,13 +69,13 @@ int main(const int argc, char** argv) {
 	mem[acc::integer_1] = acc::integer_0;
 	mem[acc::integer_2] = acc::integer_1;
 
-	const auto MAX_VAL = pairing::pairing0(acc::integer(N), acc::integer(N));
+	const auto MAX_VAL = pairing::pairing0(acc::unsigned_integer(N), acc::unsigned_integer(N));
 
-	for (auto i = acc::integer(3); i <= MAX_VAL; i += acc::integer_1) {
+	for (auto i = acc::unsigned_integer(3); i <= MAX_VAL; i += acc::integer_1) {
 		mem[i] = std::max(mem[pairing::decode_a0(i)], mem[pairing::decode_b0(i)]) + acc::integer_1;
 	}
 
-	const auto n = acc::integer(N);
+	const auto n = acc::unsigned_integer(N);
 	for (auto i = acc::integer_1; i <= n; i += acc::integer_1) {
 		for (auto j = acc::integer_1; j <= n; j += acc::integer_1) {
 			table.put(mem[pairing::pairing0(i, j)].to_string());
@@ -98,7 +98,7 @@ int main(const int argc, char** argv) {
 	G.insert(acc::integer_1);
 	Gp.insert(acc::integer_1);
 
-	std::set<acc::integer> Gnew;
+	std::set<acc::unsigned_integer> Gnew;
 
 	printG(1);
 	printf("C_1:1\n");
@@ -129,6 +129,6 @@ int main(const int argc, char** argv) {
 		// printf("%d\n", static_cast<int>(G.size()));
 	}
 
-	printDecode(acc::integer(21));
+	printDecode(acc::unsigned_integer(21));
 	return 0;
 }

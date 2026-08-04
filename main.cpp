@@ -19,7 +19,7 @@ const lazy::model core = {
 		"DEBUG", "debug",
 		[] {
 			auto op = eml::emldecodeS(
-				2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657"));
+				2, acc::unsigned_integer("1006223783010386972525519400225122423494749603838855805076470783074657"));
 			eml::survey(op).println();
 		}
 	},
@@ -46,8 +46,8 @@ const lazy::model core = {
 		"SAMPLE EMLLIB DECODER", "Shows how does EMLLIB DECODER work.",
 		[] {
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
-				acc::integer(x).println();
-				eml::eml de = eml::emldecode(acc::integer(x));
+				acc::unsigned_integer(x).println();
+				eml::eml de = eml::emldecode(acc::unsigned_integer(x));
 				de.println();
 				de.println0();
 			}
@@ -59,8 +59,8 @@ const lazy::model core = {
 			eml::algebra_definition(2, {"x", "y"});
 
 			for (const int x: {10, 42, 114514, 1919810, 123456789}) {
-				acc::integer(x).println();
-				eml::eml de = eml::emldecode(acc::integer(x));
+				acc::unsigned_integer(x).println();
+				eml::eml de = eml::emldecode(acc::unsigned_integer(x));
 				de.println();
 				de.println0();
 			}
@@ -69,7 +69,7 @@ const lazy::model core = {
 	{
 		"SAMPLE EMLLIB EXPLICT", "Shows how does EMLLIB EXPLICT replace the algebra with other algebra.",
 		[] {
-			auto decode = eml::emldecodeS(2, acc::integer(9527));
+			auto decode = eml::emldecodeS(2, acc::unsigned_integer(9527));
 			decode.println();
 
 			decode = eml::emlexplict(2, decode, {eml::E, eml::ZERO});
@@ -103,7 +103,7 @@ const lazy::model core = {
 
 			for (int i = N_S; i <= N_E; ++i) {
 				for (int j = N_S; j <= N_E; ++j) {
-					const auto s = eml::emldecodeS(i - 1, acc::integer(j + (i + 1) * i / 2));
+					const auto s = eml::emldecodeS(i - 1, acc::unsigned_integer(j + (i + 1) * i / 2));
 
 					t.put(s.to_string());
 					// eml::survey(s).println();
@@ -120,20 +120,20 @@ const lazy::model core = {
 		[] {
 			constexpr int N = 25;
 			lazy::table t;
-			std::map<acc::integer, acc::integer> mem;
+			std::map<acc::unsigned_integer, acc::unsigned_integer> mem;
 
 			mem[acc::integer_1] = acc::integer_0;
 			mem[acc::integer_2] = acc::integer_1;
 
-			const auto MAX_VAL = pairing::pairing0(acc::integer_1, acc::integer(N));
+			const auto MAX_VAL = pairing::pairing0(acc::integer_1, acc::unsigned_integer(N));
 
-			for (auto i = acc::integer(3); i <= MAX_VAL; i += acc::integer_1) {
+			for (auto i = acc::unsigned_integer(3); i <= MAX_VAL; i += acc::integer_1) {
 				mem[i] = std::max(mem[pairing::decode_a0(i)], mem[pairing::decode_b0(i)]) + acc::integer_1;
 			}
 
 			for (int i = 1; i <= N; ++i) {
 				t.put(std::to_string(i));
-				t.put(mem[pairing::pairing0(acc::integer_1, acc::integer(i))].to_string());
+				t.put(mem[pairing::pairing0(acc::integer_1, acc::unsigned_integer(i))].to_string());
 				t.wrap();
 			}
 
