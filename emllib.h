@@ -10,15 +10,15 @@
 namespace eml {
 	inline bool allow_algebra_expression = false;
 
-	inline acc::unsigned_integer emllib(const eml &a) {
+	inline acc::integer emllib(const eml &a) {
 		if (a.type) {
 			if (allow_algebra_expression) {
-				return acc::unsigned_integer(a.type) + acc::integer_1;
+				return acc::integer(a.type) + acc::integer_1;
 			}
 			throw std::logic_error("Did not support algebra expression!");
 		}
 
-		acc::unsigned_integer left, right;
+		acc::integer left, right;
 		if (a.lValue) {
 			left = emllib(*a.lValue.get());
 		} else {
@@ -34,7 +34,7 @@ namespace eml {
 		return pairing::pairing(left, right);
 	}
 
-	inline eml emldecode(const acc::unsigned_integer &n) {
+	inline eml emldecode(const acc::integer &n) {
 #ifdef DEBUG
 		printf("at ");
 		acc::println(n);
@@ -47,7 +47,7 @@ namespace eml {
 #endif
 
 		eml res;
-		acc::unsigned_integer cache = pairing::decode_a(n);
+		acc::integer cache = pairing::decode_a(n);
 		if (cache == acc::integer_1) {
 		} else if (cache <= pairing::algebra_domain + acc::integer_1) {
 			res.lValue = std::make_shared<eml>(eml((cache - acc::integer_1).to_signed()));
@@ -91,7 +91,7 @@ namespace eml {
 		assert(count == names.size());
 
 		allow_algebra_expression = true;
-		pairing::algebra_domain = acc::unsigned_integer(count);
+		pairing::algebra_domain = acc::integer(count);
 
 		algebra.clear();
 		for (int i = 0; i < count; i++) {
@@ -103,12 +103,12 @@ namespace eml {
 		algebra_definition(count, std_naming(count));
 	}
 
-	inline acc::unsigned_integer emllibS(const int count, const eml &x) {
+	inline acc::integer emllibS(const int count, const eml &x) {
 		algebra_definition(count);
 		return emllib(x);
 	}
 
-	inline eml emldecodeS(const int count, const acc::unsigned_integer &x) {
+	inline eml emldecodeS(const int count, const acc::integer &x) {
 		algebra_definition(count);
 		return emldecode(x);
 	}

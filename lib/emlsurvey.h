@@ -6,7 +6,7 @@
 namespace eml {
 	class emlsurvey {
 	public:
-		acc::unsigned_integer theta{1}, depth{1};
+		acc::integer theta{1}, depth{1};
 		bool algebra = false;
 
 		[[nodiscard]] bool pure() const {
