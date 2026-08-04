@@ -15,12 +15,17 @@ const eml::eml example1 = eml::ln(eml::X);
 const eml::eml example2 = eml::exp(eml::TWO);
 const lazy::model core = {
 	{
-		// "高精度平方根测试", "debug",
 		"DEBUG", "debug",
 		[] {
-			auto op = eml::emldecodeS(
-				2, acc::integer("1006223783010386972525519400225122423494749603838855805076470783074657"));
-			eml::survey(op).println();
+#define int_of(s) acc::integer(s)
+			int_of(-1).println();
+			(int_of(-1) + int_of(-2)).println();
+			(int_of(-1) - int_of(-2)).println();
+			(int_of(-1) / int_of(1)).println();
+			(int_of(-2) / int_of(1)).println();
+			(int_of(-1) * int_of(-2)).println();
+			(int_of(1) * int_of(-2)).println();
+#undef inf_of
 		}
 	},
 	{
